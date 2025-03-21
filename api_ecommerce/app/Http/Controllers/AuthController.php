@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\Verifiedmail;
 use Illuminate\Http\Request;
+use App\Mail\ForgotPasswordMail;
 
 class AuthController extends Controller
 {

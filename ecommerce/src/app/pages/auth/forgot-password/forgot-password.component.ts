@@ -41,7 +41,23 @@ export class ForgotPasswordComponent {
     }
     this.authService.verifiedMail(data).subscribe((resp:any) => {
       console.log(resp);
+      if (resp.message == 200) {
+        this.isLoadingMail = 1;
+        
+        this.toastr.success("Exito","El codigo esta en tu correo electronico");
+      }else{
+        this.isLoadingMail = null;
+        this.toastr.error("Validacion","¡ El correo electronico no existe !");
+      }
     });
+  }
+
+  LoadingCode($event:any){
+    this.isLoadingCode = $event;
+  }
+
+  codeValue($event:any){
+    this.code = $event;
   }
   
 
