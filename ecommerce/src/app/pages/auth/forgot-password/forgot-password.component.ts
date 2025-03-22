@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule,FormsModule,CodeForgotPasswordComponent,NewPasswordComponent],   
+  imports: [CommonModule,FormsModule,CodeForgotPasswordComponent,NewPasswordComponent,RouterModule],   
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css'
 })
