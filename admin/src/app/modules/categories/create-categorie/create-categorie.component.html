@@ -1,0 +1,58 @@
+<div class="card">
+    
+    <div class="card-body border-top p-9">
+        <div class="row mb-6">
+            <div class="col-lg-6 fv-row fv-plugins-icon-container">
+                <label class="fw-semibold fs-6 py-2">Nombre:</label>
+                <input type="text" name="name" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: computadora" >
+            </div> 
+
+            <div class="col-lg-6 fv-row fv-plugins-icon-container">
+                <label class="fw-semibold fs-6 py-2">Icon:</label>
+                <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: Icon" >
+            </div>            
+        </div>
+        <div class="row mb-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                <label class="form-label">Sube tu imagen: *</label>
+                <div class="custom-file">
+                     <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
+                     <label class="custom-file-label" for="customFile"></label>
+                </div>
+            </div>   
+            <div class="">
+                <img class="img py-4" src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg" alt="">
+            </div>
+            <div class="col-lg-6 fv-row fv-plugins-icon-container">
+                <label class="fw-semibold fs-6 py-2">Posición:</label>
+                <input type="number" name="position" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: 4" >
+            </div>
+        </div>
+
+        <div class="row mb-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                <label class="fw-semibold fs-6 py-2">Departamento:</label>
+                <select
+                        class="form-control form-select-solid fw-bolder"
+                        name="departament"
+                        placeholder="Selec. Departamento"
+                    >
+                        <option value="">Todos</option>
+                    </select>
+                
+            </div>  
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                <label class="fw-semibold fs-6 py-2">Categoria:</label>
+                <select
+                        class="form-control form-select-solid fw-bolder"
+                        name="categorie"
+                        placeholder="Selec. Categoria"
+                    >
+                        <option value="">Todos</option>
+                    </select>
+                
+            </div> 
+        </div>
+    </div>
+    
+</div>

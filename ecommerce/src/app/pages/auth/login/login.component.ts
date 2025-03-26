@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { afterNextRender, Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../service/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +27,12 @@ export class LoginComponent {
     public activedRoute: ActivatedRoute,  
   ){
 
+    afterNextRender(() => {
+      setTimeout(() => {
+       password_show_toggle();
+      }, 50);
+    })
+
   }
   ngOnInit(): void {
     //this.showSuccess();
@@ -41,9 +47,7 @@ export class LoginComponent {
       this.code_user = resp.code;
     })
 
-    setTimeout(() => {
-      password_show_toggle();
-    }, 50);
+    
 
     if(this.code_user) {
       let data = {

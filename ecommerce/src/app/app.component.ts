@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { afterNextRender, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
@@ -19,11 +19,13 @@ export class AppComponent {
   constructor(
     
   ) {
-    setTimeout(() => {
-    HOMEINIT($);
-    },20);
-    $(window).on('load', function () {
-      	$("#loading").fadeOut(500);
-      });
+    afterNextRender(() => {
+      setTimeout(() => {
+      HOMEINIT($);
+      },20);
+      $(window).on('load', function () {
+          $("#loading").fadeOut(500);
+        });
+    })
   }
 }

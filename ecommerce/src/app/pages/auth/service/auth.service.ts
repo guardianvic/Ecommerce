@@ -1,6 +1,6 @@
 import { locale } from './../../../../../../admin/src/app/modules/i18n/vocabs/fr';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { afterNextRender, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { URL_SERVICIOS } from '../../../config/config';
@@ -16,7 +16,9 @@ export class AuthService {
     public http: HttpClient,
     public router: Router,
   ) {
-    this.iniAuth();
+    afterNextRender(() => {
+      this.iniAuth();
+    })
     
    }
 
