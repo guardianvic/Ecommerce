@@ -1,5 +1,5 @@
 <div class="card">
-    
+    <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span> 
     <div class="card-body border-top p-9">
         <div class="row g-9">
             <div class="col-4">
@@ -39,18 +39,18 @@
 
         <div class="row mb-6">
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
-                <label class="fw-semibold fs-6 py-2">Nombre:</label>
+                <label class="fw-semibold fs-6 py-2">Nombre: (*) </label>
                 <input type="text" name="name" [(ngModel)]="name" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: computadora" >
             </div> 
 
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
-                <label class="fw-semibold fs-6 py-2">Icon:</label>
+                <label class="fw-semibold fs-6 py-2">Icon: (*) </label>
                 <input type="text" name="icon" [(ngModel)]="icon" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: Icon" >
             </div>            
         </div>
         <div class="row mb-6">
             <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-                <label class="form-label">Sube tu imagen: *</label>
+                <label class="form-label">Sube tu imagen: ({{type_categorie == 1 ? '*' : 'Opcional'}})</label>
                 <div class="custom-file">
                      <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
                      <label class="custom-file-label" for="customFile"></label>
@@ -58,18 +58,18 @@
             </div>  
 
             <div class="">
-                <img class="img py-4" src="imagen_previsualiza" width="200" alt="">
+                <img class="img py-4" [src]="imagen_previsualiza" width="200" alt="">
             </div>
             
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
-                <label class="fw-semibold fs-6 py-2">Posición:</label>
+                <label class="fw-semibold fs-6 py-2">Posición: (*) </label>
                 <input type="number" name="position" [(ngModel)]="position" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: 4" >
             </div>
         </div>
 
         <div class="row mb-6" *ngIf="type_categorie != 1">
             <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 2">
-                <label class="fw-semibold fs-6 py-2">Departamento:(Primer Nivel)</label>
+                <label class="fw-semibold fs-6 py-2">Departamento:(Primer Nivel *)</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="departament"
@@ -81,7 +81,7 @@
                 
             </div>  
             <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 3">
-                <label class="fw-semibold fs-6 py-2">Departamento:(Primer Nivel)</label>
+                <label class="fw-semibold fs-6 py-2">Departamento:(Primer Nivel *)</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="departament"
@@ -93,7 +93,7 @@
                 
             </div>  
             <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 3">
-                <label class="fw-semibold fs-6 py-2">Categoria:(Segundo Nivel)</label>
+                <label class="fw-semibold fs-6 py-2">Categoria:(Segundo Nivel *)</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="categorie"
