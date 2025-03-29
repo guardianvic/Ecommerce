@@ -40,12 +40,12 @@
         <div class="row mb-6">
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                 <label class="fw-semibold fs-6 py-2">Nombre:</label>
-                <input type="text" name="name" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: computadora" >
+                <input type="text" name="name" [(ngModel)]="name" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: computadora" >
             </div> 
 
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                 <label class="fw-semibold fs-6 py-2">Icon:</label>
-                <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: Icon" >
+                <input type="text" name="icon" [(ngModel)]="icon" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: Icon" >
             </div>            
         </div>
         <div class="row mb-6">
@@ -58,22 +58,35 @@
             </div>  
 
             <div class="">
-                <img class="img py-4" src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg" alt="">
+                <img class="img py-4" src="imagen_previsualiza" width="200" alt="">
             </div>
             
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                 <label class="fw-semibold fs-6 py-2">Posición:</label>
-                <input type="number" name="position" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: 4" >
+                <input type="number" name="position" [(ngModel)]="position" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: 4" >
             </div>
         </div>
 
         <div class="row mb-6" *ngIf="type_categorie != 1">
-            <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 2 || type_categorie == 3">
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 2">
                 <label class="fw-semibold fs-6 py-2">Departamento:(Primer Nivel)</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="departament"
                         placeholder="Selec. Departamento"
+                        [(ngModel)]="categorie_second_id" 
+                    >
+                        <option value="">Todos</option>
+                    </select>
+                
+            </div>  
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 3">
+                <label class="fw-semibold fs-6 py-2">Departamento:(Primer Nivel)</label>
+                <select
+                        class="form-control form-select-solid fw-bolder"
+                        name="departament"
+                        placeholder="Selec. Departamento"
+                        [(ngModel)]="categorie_third_id" 
                     >
                         <option value="">Todos</option>
                     </select>
@@ -85,11 +98,18 @@
                         class="form-control form-select-solid fw-bolder"
                         name="categorie"
                         placeholder="Selec. Categoria"
+                        [(ngModel)]="categorie_second_id" 
                     >
                         <option value="">Todos</option>
                     </select>
                 
             </div> 
+        </div>
+
+        <div class="row mb-6">
+            <div class="col-3">
+                <button class="btn btn-primary" (click)="save()" >Guardar</button>
+            </div>
         </div>
     </div>
     
