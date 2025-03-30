@@ -22,6 +22,8 @@ export class CreateCategorieComponent {
 
   isLoading$:any;
 
+  categories_first:any = [];
+  categories_seconds:any = [];
   constructor(
     public categorieService: CategoriesService,
     public toastr: ToastrService,
@@ -33,6 +35,14 @@ export class CreateCategorieComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.  
   this.isLoading$ = this.categorieService.isLoading$;
+  this.config();
+  }
+
+  config(){
+    this.categorieService.configCategories().subscribe((resp:any) => {
+      this.categories_first = resp.categories_first;
+      this.categories_seconds = resp.categories_seconds;
+    })
   }
 
   processFile($event:any){
@@ -60,9 +70,14 @@ export class CreateCategorieComponent {
 
   save(){
     
-    if (!this.name || !this.icon || !this.position) {
+    if (!this.name || !this.position) {
       this.toastr.error("Validacion","Los campos con el * son obligatorios");
       return;      
+    }
+
+    if (this.type_categorie == 1 && !this.icon) {
+      this.toastr.error("Validacion","El icon es obligatori");
+      return; 
     }
 
     if (this.type_categorie == 1 && !this.file_imagen) {
@@ -99,6 +114,22 @@ export class CreateCategorieComponent {
 
     this.categorieService.createCategories(formData).subscribe((resp:any) => {
       console.log(resp);
+
+      if (resp.message == 403) {
+        this.toastr.error("Validacion","La categoria ya existe");
+        return; 
+      }
+
+      this.name = '';
+      this.icon = '';
+      this.position = 1;
+      this.type_categorie = 1;
+      this.file_imagen = null;
+      this.imagen_previsualiza = "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg";
+      this.categorie_second_id = '';
+      this.categorie_third_id = '';
+      this.toastr.success("Exito","La categoria se registro con exito");
+      this.config();
     });
   }
 

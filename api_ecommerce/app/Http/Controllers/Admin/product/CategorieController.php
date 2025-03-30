@@ -33,8 +33,8 @@ class CategorieController extends Controller
         $categories_seconds = categorie::where("categorie_second_id","<>",NULL)->where("categorie_third_id",NULL)->get();
 
         return response()->json([
-          "$categories_first" => $categories_first,
-          "$categories_seconds" => $categories_seconds,  
+          "categories_first" => $categories_first,
+          "categories_seconds" => $categories_seconds,  
         ]);
     }
 
@@ -45,12 +45,12 @@ class CategorieController extends Controller
     {   
         $is_exists = categorie::where("name",$request->name)->first();
         if ($is_exists) {
-            return response()->json(["message" => 403);
+            return response()->json(["message" => 403]);
         }
 
         if ($request->hasFile("image")) {
             $path = Storage::putFile("categories",$request->file("image"));
-            $request->Request->add(["imagen" => $path]);
+            $request->request->add(["imagen" => $path]);
         }
         $categorie = Categorie::create($request->all());
         return response()->json(["message" => 200]);
@@ -74,7 +74,7 @@ class CategorieController extends Controller
         
         $is_exists = categorie::where("id",'<>',$id)->where("name",$request->name)->first();
         if ($is_exists) {
-            return response()->json(["message" => 403);
+            return response()->json(["message" => 403]);
         }
 
         $categorie = Categorie::findOrFail($id);
@@ -83,7 +83,7 @@ class CategorieController extends Controller
                Storage::delete($categorie->imagen);
             }
             $path = Storage::putFile("categories",$request->file("image"));
-            $request->Request->add(["imagen" => $path]);
+            $request->request->add(["imagen" => $path]);
         }
         $categorie->update($request->all());
         return response()->json(["message" => 200]);

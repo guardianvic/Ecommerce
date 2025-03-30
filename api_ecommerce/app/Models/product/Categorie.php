@@ -25,19 +25,19 @@ class Categorie extends Model
 
     public function setCreateAtAttribute($value){
         date_default_timezone_set("America/Bogota");
-        $this->attributes["created_at"] = Carbon::now();
+        $this->attributes["created_at"] = Carbon::now()->toDateTimeString();
     }
 
     public function setUpdateAtAttribute($value){
         date_default_timezone_set("America/Bogota");
-        $this->attributes["update_at"] = Carbon::now(); 
+        $this->attributes["updated_at"] = Carbon::now()->toDateTimeString(); 
     }
 
     public function categorie_second(){
-        return $this->belongsTo::(Categorie::class,"categorie_second_id");
+        return $this->belongsTo(Categorie::class,"categorie_second_id");
     }
 
     public function categorie_third(){
-        return $this->belongsTo::(Categorie::class,"categorie_third_id");
+        return $this->belongsTo(Categorie::class,"categorie_third_id");
     }
 }
