@@ -63,7 +63,7 @@ class CategorieController extends Controller
     {
         $categorie = Categorie::findOrFail($id);
 
-        return response()->json(["categorie" => CategorieResource::make($categorie)]);
+        return response()->json(["categorie" => CategorieResource::make($categories)]);
     }
 
     /**
