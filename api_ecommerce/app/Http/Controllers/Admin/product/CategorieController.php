@@ -18,7 +18,7 @@ class CategorieController extends Controller
     {
         $search = $request->search;
 
-        $categories = Categorie::where("name","like","%".$search."%")->orderBy("id","desc")->paginate(25);
+        $categories = Categorie::where("name","like","%".$search."%")->orderBy("id","desc")->paginate(1);
 
         return response()->json([
             "total" => $categories->total(),
