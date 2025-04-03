@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CategoriesService } from '../service/categories.service';
 import { ToastrService } from 'ngx-toastr';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-categorie',
@@ -24,6 +25,8 @@ export class CreateCategorieComponent {
 
   categories_first:any = [];
   categories_seconds:any = [];
+  categories_seconds_backups:any = [];
+
   constructor(
     public categorieService: CategoriesService,
     public toastr: ToastrService,
@@ -66,6 +69,12 @@ export class CreateCategorieComponent {
 
   changeTypecategorie(val:number){
     this.type_categorie = val;
+    this.categorie_third_id = '';
+    this.categorie_second_id = '';
+  }
+
+  changeDepartamento(){
+    this.categories_seconds_backups = this.categories_seconds.filter((item:any) => item.categorie_second_id == this.categorie_third_id)
   }
 
   save(){
@@ -97,7 +106,9 @@ export class CreateCategorieComponent {
 
     let formData = new FormData();
     formData.append("name",this.name);
-    formData.append("icon",this.icon);
+    if (this.icon) {
+      formData.append("icon",this.icon);      
+    }
     formData.append("position",this.position+"");
     formData.append("type_categorie",this.type_categorie+"");
     if (this.file_imagen) {
