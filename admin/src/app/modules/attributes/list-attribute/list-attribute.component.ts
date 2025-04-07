@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DeleteAttributeComponent } from '../delete-attribute/delete-attribute.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AttributesService } from '../service/attributes.service';
+import { CreateAttributeComponent } from '../create-attribute/create-attribute.component';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ListAttributeComponent {
     constructor(
       public attributesService: AttributesService,
       public modalService: NgbModal,
+      
   
     ) {
   
@@ -73,7 +75,7 @@ export class ListAttributeComponent {
     }
   
     openModalCreateAttribute(){
-
+      const modalRef = this.modalService.open(CreateAttributeComponent,{centered:true, size: 'md'});
     }
 
 
