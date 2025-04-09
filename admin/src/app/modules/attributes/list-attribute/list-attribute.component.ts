@@ -30,14 +30,14 @@ export class ListAttributeComponent {
     ngOnInit(): void {
       //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
       //Add 'implements OnInit' to the class.
-      //this.listAttributes();
+      this.listAttributes();
       this.isLoading$ = this.attributesService.isLoading$;
     }
   
     listAttributes(page = 1){
       this.attributesService.listAttributes(page,this.search).subscribe((resp:any) => {
         console.log(resp);
-        this.attributes = resp.attributes.data;
+        this.attributes = resp.attributes;
         this.totalPages = resp.total;
         this.currentPage = page;
       })

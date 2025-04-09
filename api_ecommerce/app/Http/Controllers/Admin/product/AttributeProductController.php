@@ -26,7 +26,7 @@ class AttributeProductController extends Controller
                     "name" => $attribute->name,
                     "type_attribute" => $attribute->type_attribute,
                     "state" => $attribute->state,
-                    "created_at" => $attribute->created_at->$request->format('y-m-d h:i:s'),
+                    "created_at" => $attribute->created_at ? $attribute->created_at->format('Y-m-d H:i:s') : null,
                     "properties" => $attribute->properties->map(function($propertie) {
                         return [
                             "id" => $propertie->id,
@@ -57,8 +57,8 @@ class AttributeProductController extends Controller
                 "id" => $attribute->id,
                 "name" => $attribute->name,
                 "type_attribute" => $attribute->type_attribute,
-                "state" => $attribute->state,
-                "created_at" => $attribute->created_at->$request->format('y-m-d h:i:s'),
+                "state" => $attribute->state,                
+                "created_at" => $attribute->created_at ? $attribute->created_at->format('Y-m-d H:i:s') : null,
                 "properties" => $attribute->properties->map(function($propertie) {
                     return [
                         "id" => $propertie->id,
@@ -84,8 +84,9 @@ class AttributeProductController extends Controller
         "Propertie" => [
             "id" => $Propertie->id,
             "name" => $Propertie->name,
-            "code" => $Propertie->code,
-            "created_at" => $Propertie->created_at->$request->format('y-m-d h:i:s'),                       
+            "code" => $Propertie->code,           
+            "created_at" => $Propertie->created_at ? $Propertie->created_at->format('Y-m-d H:i:s') : null,
+                       
             ]     
         ]);
     }
@@ -126,7 +127,7 @@ class AttributeProductController extends Controller
                 "name" => $attribute->name,
                 "type_attribute" => $attribute->type_attribute,
                 "state" => $attribute->state,
-                "created_at" => $attribute->created_at->$request->format('y-m-d h:i:s'),
+                "created_at" => $attribute->created_at ? $attribute->created_at->format('Y-m-d H:i:s') : null,
                 "properties" => $attribute->properties->map(function($propertie) {
                     return [
                         "id" => $propertie->id,

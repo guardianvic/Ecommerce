@@ -19,13 +19,16 @@ class Propertie extends Model
 
     ];
 
-    public function setCreateAtAttribute($value){
-        date_default_timezone_set("America/Bogota");
-        $this->attributes["created_at"] = Carbon::now()->toDateTimeString();
+    public function setCreatedAtAttribute()
+    {
+        $this->attributes['created_at'] = Carbon::now('America/Bogota')->toDateTimeString();
     }
 
-    public function setUpdateAtAttribute($value){
-        date_default_timezone_set("America/Bogota");
-        $this->attributes["updated_at"] = Carbon::now()->toDateTimeString(); 
+   
+    public function setUpdatedAtAttribute()
+    {
+        $this->attributes['updated_at'] = Carbon::now('America/Bogota')->toDateTimeString();
     }
+
+
 }
