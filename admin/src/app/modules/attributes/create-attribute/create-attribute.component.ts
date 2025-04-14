@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AttributesService } from '../service/attributes.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CreateAttributeComponent {
 
+  @Output() AttributeC: EventEmitter<any> = new EventEmitter();
 
   name:string = '';
   type_attribute:number = 1;
@@ -17,7 +18,7 @@ export class CreateAttributeComponent {
 
   constructor(
 
-    public attributeService: AttributesService,
+    public attributesService: AttributesService,
     public modal: NgbActiveModal,
     private toastr: ToastrService,
   ){
@@ -27,7 +28,7 @@ export class CreateAttributeComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.isLoading$ = this.attributeService.isLoading$;
+    this.isLoading$ = this.attributesService.isLoading$;
   }
 
   store(){
@@ -40,8 +41,16 @@ export class CreateAttributeComponent {
       type_attribute: this.type_attribute,
       state: 1,
     };
-    this.attributeService.createAttributes(data).subscribe((resp:any) => {
+    this.attributesService.createAttributes(data).subscribe((resp:any) => {
       console.log(resp);
+      if (resp.message == 403) {
+        this.toastr.error("Validacion","El nombre de atributo ya exite");
+        return;
+      }else{
+        this.AttributeC.emit(resp.attribute);
+        this.toastr.success("Exitos","El atributo fue creado con exito");
+        this.modal.close();
+      }
     })
   }
 

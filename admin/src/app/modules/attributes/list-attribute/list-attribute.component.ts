@@ -3,6 +3,7 @@ import { DeleteAttributeComponent } from '../delete-attribute/delete-attribute.c
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AttributesService } from '../service/attributes.service';
 import { CreateAttributeComponent } from '../create-attribute/create-attribute.component';
+import { EditAttributeComponent } from '../edit-attribute/edit-attribute.component';
 
 
 @Component({
@@ -43,8 +44,9 @@ export class ListAttributeComponent {
       })
     }   
     
-    getNameAttribute(type_attribute:number){
+    getNameAttribute(type_attribute:any){
       var name_attribute = "";
+      type_attribute = parseInt(type_attribute);
       switch (type_attribute) {
         case 1:
           name_attribute = "Texto"
@@ -76,22 +78,36 @@ export class ListAttributeComponent {
   
     openModalCreateAttribute(){
       const modalRef = this.modalService.open(CreateAttributeComponent,{centered:true, size: 'md'});
+
+      modalRef.componentInstance.AttributeC.subscribe((attrib:any) => {
+        this.attributes.unshift(attrib);
+      })
     }
 
 
     openModalEditAttribute(attribute:any){
+      const modalRef = this.modalService.open(EditAttributeComponent,{centered:true, size: 'md'});
+      modalRef.componentInstance.attribute = attribute;
+
+      modalRef.componentInstance.AttributeE.subscribe((attrib:any) => {
+        // this.attributes.unshift(attrib);
+        let INDEX = this.attributes.findIndex((item:any) => item.id == attrib.id);
+          if (INDEX != -1) {
+            this.attributes[INDEX] = attrib
+          }
+      })
       
     }
   
     deleteAttribute(attribute:any) {
       const modalRef = this.modalService.open(DeleteAttributeComponent,{centered:true, size: 'md'});
-      modalRef.componentInstance.categorie = attribute;
+      modalRef.componentInstance.attribute = attribute;
   
-      // modalRef.componentInstance.categorieD.subscribe((resp:any) => {
-      //   let INDEX = this.attributes.findIndex((item:any) => item.id == categorie.id);
-      //   if (INDEX != -1) {
-      //     this.attributes.splice(INDEX,1);
-      //   }
-      // })
+       modalRef.componentInstance.AttributeD.subscribe((resp:any) => {
+        let INDEX = this.attributes.findIndex((item:any) => item.id == attribute.id);
+        if (INDEX != -1) {
+          this.attributes.splice(INDEX,1);
+        }
+      })
     }
 }
