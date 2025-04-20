@@ -48,7 +48,7 @@ export class CreateAttributeComponent {
         return;
       }else{
         this.AttributeC.emit(resp.attribute);
-        this.toastr.success("Exitos","El atributo fue creado con exito");
+        this.toastr.success("Exitos","El atributo fue registrado con exito");
         this.modal.close();
       }
     })
