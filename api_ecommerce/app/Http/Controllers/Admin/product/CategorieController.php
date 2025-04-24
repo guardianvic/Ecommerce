@@ -43,7 +43,7 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {   
-        $is_exists = categorie::where("name",$request->name)->first();
+        $is_exists = Categorie::where("name",$request->name)->first();
         if ($is_exists) {
             return response()->json(["message" => 403]);
         }
@@ -72,7 +72,7 @@ class CategorieController extends Controller
     public function update(Request $request, string $id)
     {
         
-        $is_exists = categorie::where("id",'<>',$id)->where("name",$request->name)->first();
+        $is_exists = Categorie::where("id",'<>',$id)->where("name",$request->name)->first();
         if ($is_exists) {
             return response()->json(["message" => 403]);
         }
