@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@ckeditor/ckeditor5-angular": "^9.1.0",
+    "@ckeditor/ckeditor5-build-classic": "^44.3.0",
+    "ckeditor4-angular": "^5.2.1"
+  }
+}
