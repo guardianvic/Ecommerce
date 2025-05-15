@@ -28,9 +28,9 @@ class CategorieController extends Controller
 
     public function config(){
        
-        $categories_first = categorie::where("categorie_second_id",NULL)->where("categorie_third_id",NULL)->get();
+        $categories_first = Categorie::where("categorie_second_id",NULL)->where("categorie_third_id",NULL)->get();
 
-        $categories_seconds = categorie::where("categorie_second_id","<>",NULL)->where("categorie_third_id",NULL)->get();
+        $categories_seconds = Categorie::where("categorie_second_id","<>",NULL)->where("categorie_third_id",NULL)->get();
 
         return response()->json([
           "categories_first" => $categories_first,

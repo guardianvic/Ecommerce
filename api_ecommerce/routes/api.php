@@ -57,5 +57,9 @@ Route::group([
 
     Route::resource('sliders',SliderController::class);
     Route::post('sliders/{id}',[SliderController::class,"update"]);
+
+    Route::get('products/config',[ProductController::class,"config"]);
+    Route::resource('products',ProductController::class);
+    Route::post('products/{id}',[ProductController::class,"update"]);
 });
 

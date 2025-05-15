@@ -4,7 +4,7 @@
         <div class="row mb-6">
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                 <label class="fw-semibold fs-6 py-2">Titulo: (*) </label>
-                <input type="text" name="title" [(ngModel)]="title" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: The best tablet Collection 2024 " >
+                <input type="text" name="title" (keyup.enter)="addItems()" [(ngModel)]="title" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: The best tablet Collection 2024 " >
             </div>
 
             <div class="col-lg-4 fv-row fv-plugins-icon-container">
@@ -28,7 +28,23 @@
                 <input type="number" name="price_usd" [(ngModel)]="price_usd"
                  class="form-control form-control-lg form-control-solid" 
                  placeholder="Ejemplo: 20 USD" >
-            </div>  
+            </div> 
+            
+            <div class="col-lg-4 fv-row fv-plugins-icon-container">
+                <label class="fw-semibold fs-6 py-2">Marcas:(*)</label>
+                <select
+                        class="form-control form-select-solid fw-bolder"
+                        name="marca"
+                        placeholder="Selec. Marca"
+                        [(ngModel)]="marca_id"
+                          
+                    >
+                        <option value="">Selec.</option>
+                        <ng-container *ngFor="let item of marcas">
+                            <option [value]="item.id">{{item.name}}</option> 
+                        </ng-container>
+                    </select>
+            </div>
         </div>
         <div class="row mb-6">
             <div class="col-4">
@@ -77,7 +93,20 @@
                     </select>
             </div>
         </div>
-
+        <div class="row mb-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="!isShowMultiselect">
+                <label class="fw-semibold fs-6 py-2">Tags: </label>
+                <ng-multiselect-dropdown
+                    [placeholder]="'custom placeholder'"
+                    [settings]="dropdownSettings"
+                    [data]="dropdownList"
+                    [(ngModel)]="selectedItems"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                    >
+                    </ng-multiselect-dropdown>
+            </div>
+        </div>
         <div class="row mb-6">
             <div class="col-lg-6 col-md-6 col-sm-12 my-2">
                 <label class="form-label">Sube tu imagen: (*)</label>
@@ -95,9 +124,10 @@
         <div class="row mb-8">
             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                 <label class="fs-6 fw-semibold mb-2">Descripción: </label>
-                <ckeditor [data]="description" ></ckeditor>
+                <ckeditor [data]="description"[config]="config" 
+                (change)="onChange($event)"></ckeditor>
             </div>
-            <div class="col-lg-8 fv-row fv-plugins-icon-container">
+            <div class="col-lg-4 fv-row fv-plugins-icon-container">
                 <label class="fs-6 fw-semibold mb-2">Resumen: </label>
                 <textarea class="form-control form-control-solid" rows="3"
                  name="resumen" [(ngModel)]="resumen" placeholder="*******"></textarea>
