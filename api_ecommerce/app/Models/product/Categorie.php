@@ -2,7 +2,7 @@
 
 namespace App\Models\Product;
 
-use Carbon;
+use Carbon\Carbon;
 use App\Models\Product\Categorie;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -4,7 +4,7 @@
         <div class="row mb-6">
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                 <label class="fw-semibold fs-6 py-2">Titulo: (*) </label>
-                <input type="text" name="title" (keyup.enter)="addItems()" [(ngModel)]="title" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: The best tablet Collection 2024 " >
+                <input type="text" name="title" [(ngModel)]="title" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: The best tablet Collection 2024 " >
             </div>
 
             <div class="col-lg-4 fv-row fv-plugins-icon-container">
@@ -63,7 +63,7 @@
                     </select>
             </div>
             <div class="col-4">
-                <label class="fw-semibold fs-6 py-2">Categoria:(Segundo Nivel *)</label>
+                <label class="fw-semibold fs-6 py-2">Categoria:(Segundo Nivel (Opcional))</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="categorie"
@@ -78,12 +78,13 @@
                     </select>
             </div>
             <div class="col-4">
-                <label class="fw-semibold fs-6 py-2">Sub Categoria:(Tercer Nivel *)</label>
+                <label class="fw-semibold fs-6 py-2">Sub Categoria:(Tercer Nivel (Opcional))</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="categorie"
                         placeholder="Selec. Categoria"
                         [(ngModel)]="categorie_third_id"
+                        (change)="changeCategorie()" 
                          
                     >
                         <option value="">Selec.</option>
@@ -94,6 +95,12 @@
             </div>
         </div>
         <div class="row mb-6">
+            <div class="col-lg-4 col-md-4 col-sm-12 my-2">
+                <label class="fw-semibold fs-6 py-2">Word: (*) </label>
+                <input type="text" name="word" (keyup.enter)="addItems()" [(ngModel)]="word"
+                 class="form-control form-control-lg form-control-solid" 
+                 placeholder="Ejemplo: XXXXX " >
+            </div>
             <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="!isShowMultiselect">
                 <label class="fw-semibold fs-6 py-2">Tags: </label>
                 <ng-multiselect-dropdown

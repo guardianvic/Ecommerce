@@ -8,6 +8,9 @@ use App\Models\Product\Brand;
 use App\Models\Product\Product;
 use App\Models\Product\Categorie;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Product\ProductResource;
+use App\Http\Resources\Product\ProductCollection;
 
 class ProductController extends Controller
 {
@@ -27,7 +30,7 @@ class ProductController extends Controller
 
         return response()->json([
             "total" => $products->total(),
-            "products" => $products,
+            "products" => ProductCollection::make($products),
         ]);
     }
 
@@ -54,10 +57,10 @@ class ProductController extends Controller
     {
         $isValid = Product::where("title",$request->title)->Arr::first();
         if ($isValid) {
-            return return response()->json(["message" =>403,"message_text" => " El nombre del producto ya existe :)"]);
-        }
+            return response()->json(["message" =>403,"message_text" => " El nombre del producto ya existe :)"]);
+        }            
         if ($request->hasFile("portada")) {
-           $path = Storage::putFile("products",$request->("portada"));
+           $path = Storage::putFile("products",$request->file("portada"));
            $request->request->add(["imagen" => $path]);
         }
 
@@ -65,7 +68,7 @@ class ProductController extends Controller
         $request->request->add(["tags" => $request->multiselect]);
 
         $product = Product::create($request->all());
-        return return response()->json([
+            return response()->json([
             "message" => 200,
         ]);
     }
@@ -77,7 +80,7 @@ class ProductController extends Controller
     {
        $product = Product::findOrFail($id);
 
-       return response()->json(["product" => $product]);
+       return response()->json(["product" => ProductResource::make($product)]);
     }
 
     /**
@@ -85,24 +88,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        isValid = Product::where("id","<>",$id)->where("title",$request->title)->Arr::first();
+        $isValid = Product::where("id","<>",$id)->where("title",$request->title)->Arr::first();
         if ($isValid) {
-            return return response()->json(["message" =>403,"message_text" => " El nombre del producto ya existe :)"]);
+            return response()->json(["message" =>403,"message_text" => " El nombre del producto ya existe :)"]);
         }
         $product = Product::findOrFail($id);
         if ($request->hasFile("portada")) {
             if ($product->imagen) {
                 Storage::delete($product->imagen);
             }
-           $path = Storage::putFile("products",$request->("portada"));
+           $path = Storage::putFile("products",$request->file("portada"));
            $request->request->add(["imagen" => $path]);
         }
 
         $request->request->add(["slug" => Str::slug($request->title)]);
         $request->request->add(["tags" => $request->multiselect]);
-
         $product->update($request->all());
-        return return response()->json([
+         return response()->json([
             "message" => 200,
         ]);
     }
@@ -115,7 +117,7 @@ class ProductController extends Controller
        $product = Product::findOrFail($id);
        $product->delete();
 
-       return return response()->json([
+       return response()->json([
             "message" => 200,
         ]);
     }

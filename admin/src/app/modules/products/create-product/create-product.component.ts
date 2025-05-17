@@ -10,10 +10,10 @@ import { CKEditor4 } from 'ckeditor4-angular';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.scss']
 })
-export class CreateProductComponent {
-onChange($event: CKEditor4.EventInfo) {
-throw new Error('Method not implemented.');
-}
+    export class CreateProductComponent {
+    onChange($event: CKEditor4.EventInfo) {
+    throw new Error('Method not implemented.');
+  }
 
       title:string = '';
       sku:string = '';
@@ -25,6 +25,7 @@ throw new Error('Method not implemented.');
       file_imagen:any = null;
       marca_id:string = '';
       marcas:any = [];
+      
       
       isLoading$:any;
 
@@ -41,6 +42,7 @@ throw new Error('Method not implemented.');
       dropdownList:any = [];
       selectedItems:any = [];
       dropdownSettings:IDropdownSettings = {};
+      word:string = '';
       
       isShowMultiselect:Boolean = false;
     
@@ -56,17 +58,17 @@ throw new Error('Method not implemented.');
         //Add 'implements OnInit' to the class.  
       this.isLoading$ = this.productService.isLoading$;
 
-      this.dropdownList = [
-        { item_id: 1, item_text: 'Mumbai' },
-        { item_id: 2, item_text: 'Bangaluru' },
-        { item_id: 3, item_text: 'Pune' },
-        { item_id: 4, item_text: 'Navsari' },
-        { item_id: 5, item_text: 'New Delhi' }
-        ];
-        this.selectedItems = [
-          { item_id: 3, item_text: 'Pune' },
-          { item_id: 4, item_text: 'Navsari' }
-        ];
+      // this.dropdownList = [
+      //   { item_id: 1, item_text: 'Mumbai' },
+      //   { item_id: 2, item_text: 'Bangaluru' },
+      //   { item_id: 3, item_text: 'Pune' },
+      //   { item_id: 4, item_text: 'Navsari' },
+      //   { item_id: 5, item_text: 'New Delhi' }
+      //   ];
+      //   this.selectedItems = [
+      //     { item_id: 3, item_text: 'Pune' },
+      //     { item_id: 4, item_text: 'Navsari' }
+      //   ];
         this.dropdownSettings = {
           singleSelection: false,
           idField: 'item_id',
@@ -76,14 +78,26 @@ throw new Error('Method not implemented.');
           // itemsShowLimit: 3,
           allowSearchFilter: true
         };
-     
+        this.configAll();
+      }
+
+      configAll(){
+        this.productService.configAll().subscribe((resp:any) => {
+          console.log(resp);
+          this.marcas = resp.brands;
+          this.categories_first = resp.categories_first;
+          this.categories_seconds = resp.categories_seconds;
+          this.categories_thirds = resp.categories_thirds;
+        })
       }
 
       addItems(){
         this.isShowMultiselect = true;
-        this.dropdownList.push({item_id: 6, item_text:'Laravest'});
-        this.selectedItems.push({item_id: 6, item_text:'Laravest'});
+        let time_date = new Date().getTime();
+        this.dropdownList.push({item_id: time_date, item_text: this.word});
+        this.selectedItems.push({item_id: time_date, item_text: this.word});
         setTimeout(() => {
+          this.word = '';
           this.isShowMultiselect = false;
           this.isLoadingView();
         }, 100);
@@ -128,24 +142,58 @@ throw new Error('Method not implemented.');
   
       save(){
         
-        if (!this.title || !this.file_imagen) {
+        if (!this.title || !this.file_imagen || !this.sku || !this.price_cop 
+          || !this.price_usd || !this.marca_id || !this.categories_first 
+          || !this.description || !this.resumen || this.selectedItems == 0) {
           this.toastr.error("Validacion","Los campos con el * son obligatorios");
           return;      
         }
     
         let formData = new FormData();
         formData.append("title",this.title);
+        formData.append("sku",this.sku);
+        formData.append("price_cop",this.price_cop+"");
+        formData.append("price_usd",this.price_usd+"");
+        formData.append("brand_id",this.marca_id);
         formData.append("portada",this.file_imagen);
+        formData.append("categorie_first_id",this.categorie_first_id);
+        if (this.categorie_second_id) {
+          formData.append("categorie_second_id",this.categorie_second_id);
+        }
+        if (this.categorie_third_id) {
+          formData.append("categorie_third_id",this.categorie_third_id);
+        }
+        formData.append("description",this.description);
+        formData.append("resumen",this.resumen);
+        formData.append("multiselect",JSON.stringify(this.selectedItems));
+        
        
          
         this.productService.createProducts(formData).subscribe((resp:any) => {
           console.log(resp);
+
+          if (resp.message == 403) {
+            this.toastr.error("Validación",resp.message_text);
+          }else{
+
+             this.title = '';
+             this.file_imagen = null;   
+             this.sku = '';
+             this.price_cop = 0;
+             this.price_usd = 0;
+             this.marca_id = '';
+             this.categorie_first_id = '';
+             this.categorie_second_id = '';
+             this.categorie_third_id = '';
+             this.description = '';
+             this.resumen = '';
+             this.selectedItems = [];
+  
+            this.imagen_previsualiza = "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg";
+            this.toastr.success("Exito","El producto se registro con exito");
+            
+          }
     
-          this.title = '';
-          this.file_imagen = null;
-          this.imagen_previsualiza = "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg";
-          this.toastr.success("Exito","El producto se registro con exito");
-          
         });
       }
       
