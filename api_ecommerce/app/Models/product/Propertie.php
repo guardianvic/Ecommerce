@@ -30,5 +30,4 @@ class Propertie extends Model
         $this->attributes['updated_at'] = Carbon::now('America/Bogota')->toDateTimeString();
     }
 
-
 }

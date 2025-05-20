@@ -8,7 +8,7 @@
             </div>
 
             <div class="col-lg-4 fv-row fv-plugins-icon-container">
-                <label class="fw-semibold fs-6 py-2">Sku: (*) </label>
+                <label class="fw-semibold fs-6 py-2">Referencia: (*) </label>
                 <input type="text" name="sku" [(ngModel)]="sku"
                  class="form-control form-control-lg form-control-solid" 
                  placeholder="Ejemplo: ZDR456" >
@@ -41,7 +41,7 @@
                     >
                         <option value="">Selec.</option>
                         <ng-container *ngFor="let item of marcas">
-                            <option [value]="item.id">{{item.name}}</option> 
+                            <option [value]="item.id">{{ item.name }}</option> 
                         </ng-container>
                     </select>
             </div>
@@ -58,12 +58,12 @@
                     >
                         <option value="">Selec.</option>
                         <ng-container *ngFor="let item of categories_first">
-                            <option [value]="item.id">{{item.name}}</option> 
+                            <option [value]="item.id">{{ item.name }}</option> 
                         </ng-container>
                     </select>
             </div>
             <div class="col-4">
-                <label class="fw-semibold fs-6 py-2">Categoria:(Segundo Nivel (Opcional))</label>
+                <label class="fw-semibold fs-6 py-2">Categoria:(Segundo Nivel ( Opcional ) )</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="categorie"
@@ -73,36 +73,34 @@
                     >
                         <option value="">Selec.</option>
                         <ng-container *ngFor="let item of categories_seconds_backups">
-                            <option [value]="item.id">{{item.name}}</option> 
+                            <option [value]="item.id">{{ item.name }}</option> 
                         </ng-container>
                     </select>
             </div>
             <div class="col-4">
-                <label class="fw-semibold fs-6 py-2">Sub Categoria:(Tercer Nivel (Opcional))</label>
+                <label class="fw-semibold fs-6 py-2">Sub Categoria:(Tercer Nivel ( Opcional ) )</label>
                 <select
                         class="form-control form-select-solid fw-bolder"
                         name="categorie"
                         placeholder="Selec. Categoria"
-                        [(ngModel)]="categorie_third_id"
-                        (change)="changeCategorie()" 
-                         
+                        [(ngModel)]="categorie_third_id"  
                     >
                         <option value="">Selec.</option>
                         <ng-container *ngFor="let item of categories_thirds_backups">
-                            <option [value]="item.id">{{item.name}}</option> 
+                            <option [value]="item.id">{{ item.name }}</option> 
                         </ng-container>
                     </select>
             </div>
         </div>
         <div class="row mb-6">
             <div class="col-lg-4 col-md-4 col-sm-12 my-2">
-                <label class="fw-semibold fs-6 py-2">Word: (*) </label>
+                <label class="fw-semibold fs-6 py-2">Palabra : (*) </label>
                 <input type="text" name="word" (keyup.enter)="addItems()" [(ngModel)]="word"
                  class="form-control form-control-lg form-control-solid" 
                  placeholder="Ejemplo: XXXXX " >
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="!isShowMultiselect">
-                <label class="fw-semibold fs-6 py-2">Tags: </label>
+                <label class="fw-semibold fs-6 py-2">Etiquetas : </label>
                 <ng-multiselect-dropdown
                     [placeholder]="'custom placeholder'"
                     [settings]="dropdownSettings"
@@ -110,15 +108,16 @@
                     [(ngModel)]="selectedItems"
                     (onSelect)="onItemSelect($event)"
                     (onSelectAll)="onSelectAll($event)"
-                    >
-                    </ng-multiselect-dropdown>
+                >
+                </ng-multiselect-dropdown>
             </div>
         </div>
         <div class="row mb-6">
             <div class="col-lg-6 col-md-6 col-sm-12 my-2">
                 <label class="form-label">Sube tu imagen: (*)</label>
                 <div class="custom-file">
-                     <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
+                     <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, 
+                     .png, .gif, .webp"  (change)="processFile($event)">
                      <label class="custom-file-label" for="customFile"></label>
                 </div>
             </div>  

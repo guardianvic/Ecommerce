@@ -8,7 +8,7 @@
             </div> 
 
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
-                <label class="fw-semibold fs-6 py-2">label: (Opcional)</label>
+                <label class="fw-semibold fs-6 py-2">Etiqueta : ( Opcional )</label>
                 <input type="text" name="label" [(ngModel)]="label" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: Starting at $ 9.999 " >
             </div>  
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
@@ -22,7 +22,8 @@
             <div class="col-lg-6 col-md-6 col-sm-12 my-2">
                 <label class="form-label">Sube tu imagen: (*)</label>
                 <div class="custom-file">
-                     <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
+                     <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg,
+                      .png, .gif, .webp"  (change)="processFile($event)">
                      <label class="custom-file-label" for="customFile"></label>
                 </div>
             </div>  

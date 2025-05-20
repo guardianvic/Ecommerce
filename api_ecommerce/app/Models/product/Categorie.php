@@ -13,6 +13,7 @@ class Categorie extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
+        
         "name",
         "icon",
         "imagen",
@@ -21,7 +22,6 @@ class Categorie extends Model
         "position",  
         "type_categorie",
         "state"
-
     ];
 
     public function setCreatedAtAttribute()

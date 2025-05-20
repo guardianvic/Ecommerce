@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { CKEditor4 } from 'ckeditor4-angular';
 
 
 @Component({
@@ -11,9 +10,7 @@ import { CKEditor4 } from 'ckeditor4-angular';
   styleUrls: ['./create-product.component.scss']
 })
     export class CreateProductComponent {
-    onChange($event: CKEditor4.EventInfo) {
-    throw new Error('Method not implemented.');
-  }
+  
 
       title:string = '';
       sku:string = '';
@@ -32,7 +29,6 @@ import { CKEditor4 } from 'ckeditor4-angular';
       categorie_first_id:string = '';
       categorie_second_id:string = '';
       categorie_third_id:string = '';
-
       categories_first:any = [];
       categories_seconds:any = [];
       categories_seconds_backups:any = [];
@@ -132,6 +128,10 @@ import { CKEditor4 } from 'ckeditor4-angular';
           item.categorie_second_id == this.categorie_second_id)
       }
 
+      public onChange(event: any) {
+        this.description = event.editor.getData();
+      }
+
       onItemSelect(item: any) {
         console.log(item);
       }
@@ -144,7 +144,7 @@ import { CKEditor4 } from 'ckeditor4-angular';
         
         if (!this.title || !this.file_imagen || !this.sku || !this.price_cop 
           || !this.price_usd || !this.marca_id || !this.categories_first 
-          || !this.description || !this.resumen || this.selectedItems == 0) {
+          || !this.description || !this.resumen || (this.selectedItems == 0)) {
           this.toastr.error("Validacion","Los campos con el * son obligatorios");
           return;      
         }
@@ -197,8 +197,9 @@ import { CKEditor4 } from 'ckeditor4-angular';
         });
       }
       
-      config: any = {
-        versionCheck: false,
-    }
+         config: any = {
+          versionCheck: false,
+          }
+      }
 
-}
+

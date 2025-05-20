@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\product;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Product\Brand;
@@ -19,14 +20,14 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->$search;
+        $search = $request->search;
         $categorie_first_id = $request->categorie_first_id;
         $categorie_second_id = $request->categorie_second_id;
         $categorie_third_id = $request->categorie_third_id;
         $brand_id = $request->brand_id;
 
-        $products = Product::filterAdvanceProduct($search,$categorie_first_id,$categorie_second_id,$categorie_third_id)
-                            ->orderBy("id")->paginate(25);
+        $products = Product::filterAdvanceProduct($search,$categorie_first_id,$categorie_second_id,$categorie_third_id,$brand_id)
+                            ->orderBy("id","desc")->paginate(25);
 
         return response()->json([
             "total" => $products->total(),
@@ -38,7 +39,7 @@ class ProductController extends Controller
 
         $categories_first = Categorie::where("state",1)->where("categorie_second_id",NULL)->where("categorie_third_id",NULL)->get();
         $categories_seconds = Categorie::where("state",1)->where("categorie_second_id","<>",NULL)->where("categorie_third_id",NULL)->get();
-        $categories_thirds = Categorie::where("state",1)->where("categorie_second_id","<>",NULL)->where("categorie_third_id",NULL)->get();
+        $categories_thirds = Categorie::where("state",1)->where("categorie_second_id","<>",NULL)->where("categorie_third_id","<>",NULL)->get();
 
         $brands = Brand::where("state",1)->get();
 
@@ -55,7 +56,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $isValid = Product::where("title",$request->title)->Arr::first();
+        $isValid = Product::where("title",$request->title)->first();
         if ($isValid) {
             return response()->json(["message" =>403,"message_text" => " El nombre del producto ya existe :)"]);
         }            
@@ -66,7 +67,6 @@ class ProductController extends Controller
 
         $request->request->add(["slug" => Str::slug($request->title)]);
         $request->request->add(["tags" => $request->multiselect]);
-
         $product = Product::create($request->all());
             return response()->json([
             "message" => 200,
@@ -116,7 +116,7 @@ class ProductController extends Controller
     {
        $product = Product::findOrFail($id);
        $product->delete();
-
+        // PORQUE NO SE ELIMINAR UN PRODUCTO QUE YA TENGA UNA VENTA
        return response()->json([
             "message" => 200,
         ]);

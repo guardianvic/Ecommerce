@@ -3,7 +3,9 @@
 namespace App\Models\Product;
 
 use Carbon\Carbon;
+use App\Models\Product\Brand;
 use App\Models\Product\Categorie;
+use App\Models\Product\ProductImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +15,8 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
+
+
         "title",
         "slug",
         "sku",
@@ -27,8 +31,8 @@ class Product extends Model
         "categorie_first_id",
         "categorie_second_id",
         "categorie_third_id",
-        "stock"
-    ]
+        "stock",
+    ];
 
     public function setCreatedAtAttribute()
     {
@@ -40,6 +44,8 @@ class Product extends Model
     {
         $this->attributes['updated_at'] = Carbon::now('America/Bogota')->toDateTimeString();
     }
+
+    
 
     public function categorie_first(){
         return $this->belongsTo(Categorie::class,"categorie_first_id");
@@ -61,7 +67,7 @@ class Product extends Model
         return $this->hasMany(ProductImage::class,"product_id");
     }
 
-    public function scopeFilterAdvanceProduct($query,$search,$categorie_first_id,$categorie_second_id,$categorie_third_id){
+    public function scopeFilterAdvanceProduct($query,$search,$categorie_first_id,$categorie_second_id,$categorie_third_id,$brand_id){
         
         if ($search) {
             $query->where("title","like","%".$search."%");
@@ -75,12 +81,11 @@ class Product extends Model
         if ($categorie_third_id) {
             $query->where("categorie_third_id",$categorie_third_id);
         }
-       
-                            
-                            
-                            
+        if($brand_id){
+            $query->where("brand_id",$brand_id);
+        }                     
 
-        return $query,
+        return $query;
     }
 }
 

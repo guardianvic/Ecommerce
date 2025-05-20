@@ -12,6 +12,7 @@ class Slider extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
+
         "title",
         "subtitle",
         "label",
@@ -19,7 +20,6 @@ class Slider extends Model
         "link",        
         "state",
         "color"
-
     ];
 
     public function setCreatedAtAttribute()
