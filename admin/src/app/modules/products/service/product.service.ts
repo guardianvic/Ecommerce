@@ -20,11 +20,11 @@ export class ProductService {
        this.isLoading$ = this.isLoadingSubject.asObservable();
      }
    
-     listProducts(page:number = 1,search:string){
+     listProducts(page:number = 1,data:any){
        this.isLoadingSubject.next(true);
        let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authservice.token});
-       let URL = URL_SERVICIOS+"/admin/products?page="+page+"&search="+search;
-       return this.http.get(URL,{headers: headers}).pipe(
+       let URL = URL_SERVICIOS+"/admin/products/index?page="+page;
+       return this.http.post(URL,data,{headers: headers}).pipe(
          finalize(() => this.isLoadingSubject.next(false))
        );
      }
@@ -65,22 +65,31 @@ export class ProductService {
        );
      }
    
-     deleteProduct(product_id:string){
+      deleteProduct(product_id:string){
        this.isLoadingSubject.next(true);
        let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authservice.token});
        let URL = URL_SERVICIOS+"/admin/products/"+product_id;
        return this.http.delete(URL,{headers: headers}).pipe(
          finalize(() => this.isLoadingSubject.next(false))
        );
-     }
+      }
 
-     imagenAdd(data:any){
+      imagenAdd(data:any){
       this.isLoadingSubject.next(true);
       let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
       let URL = URL_SERVICIOS+"/admin/products/imagens"; 
       return this.http.post(URL,data,{headers: headers}).pipe(
         finalize(() => this.isLoadingSubject.next(false))
       );
-    }
+     }
+
+      deleteImageProduct(imagen_id:string){
+      this.isLoadingSubject.next(true);
+      let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+      let URL = URL_SERVICIOS+"/admin/products/imagens/"+imagen_id; 
+      return this.http.delete(URL,{headers: headers}).pipe(
+        finalize(() => this.isLoadingSubject.next(false))
+      );
+      }
 
 }

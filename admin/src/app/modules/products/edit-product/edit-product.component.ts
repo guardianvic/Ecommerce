@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductService } from '../service/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteImagenAddComponent } from './delete-imagen-add/delete-imagen-add.component';
 
 @Component({
   selector: 'app-edit-product',
@@ -122,7 +123,6 @@ export class EditProductComponent {
             this.categorie_third_id = resp.product.categorie_third_id;
             this.selectedItems = resp.product.selectedItems;
             this.images_files = resp.product.images;
-  
             
             this.changeDepartamento();
             this.changeCategorie();
@@ -186,15 +186,15 @@ export class EditProductComponent {
         }
 
         removeImages(id:number){
-          // const modalRef = this.modalService.open(DeleteImagenAddComponent,{centered:true, size: 'md'});
-          // modalRef.componentInstance.id = id;
+          const modalRef = this.modalService.open(DeleteImagenAddComponent,{centered:true, size: 'md'});
+          modalRef.componentInstance.id = id;
       
-          // modalRef.componentInstance.ImagenD.subscribe((resp:any) => {
-          //   let INDEX = this.images_files.findIndex((item:any) => item.id == id);
-          //   if(INDEX != -1){
-          //     this.images_files.splice(INDEX,1);
-          //   }
-          // })
+          modalRef.componentInstance.ImagenD.subscribe((resp:any) => {
+            let INDEX = this.images_files.findIndex((item:any) => item.id == id);
+            if(INDEX != -1){
+              this.images_files.splice(INDEX,1);
+            }
+          })
         }
       
         addImagen() {
@@ -207,7 +207,10 @@ export class EditProductComponent {
           formData.append("product_id",this.PRODUCT_ID);
           this.productService.imagenAdd(formData).subscribe((resp:any) => {
             console.log(resp);
-            
+            this.images_files.unshift(resp.imagen);
+            this.imagen_add = null;
+            this.imagen_add_previsualiza = "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg";
+    
           })
         }
   

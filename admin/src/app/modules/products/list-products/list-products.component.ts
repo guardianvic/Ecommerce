@@ -16,18 +16,18 @@ export class ListProductsComponent {
       totalPages:number = 0;
       currentPage:number =1;
     
-       isLoading$:any;
+      isLoading$:any;
 
-       marcas:any = [];
-        marca_id:string = '';
-       categorie_first_id:string = '';
-       categorie_second_id:string = '';
-       categorie_third_id:string = '';
-       categories_first:any = [];
-       categories_seconds:any = [];
-       categories_seconds_backups:any = [];
-       categories_thirds:any = [];
-       categories_thirds_backups:any = [];
+      marcas:any = [];
+      marca_id:string = '';
+      categorie_first_id:string = '';
+      categorie_second_id:string = '';
+      categorie_third_id:string = '';
+      categories_first:any = [];
+      categories_seconds:any = [];
+      categories_seconds_backups:any = [];
+      categories_thirds:any = [];
+      categories_thirds_backups:any = [];
 
       constructor(
         public productService: ProductService,
@@ -42,6 +42,7 @@ export class ListProductsComponent {
         //Add 'implements OnInit' to the class.
         this.listProducts();
         this.isLoading$ = this.productService.isLoading$;
+        this.configAll();
       }
 
       configAll(){
@@ -55,7 +56,15 @@ export class ListProductsComponent {
       }
     
       listProducts(page = 1){
-        this.productService.listProducts(page,this.search).subscribe((resp:any) => {
+        let data = {
+
+          search: this.search,
+          brand_id: this.marca_id,
+          categorie_first_id: this.categorie_first_id,
+          categorie_second_id: this.categorie_second_id,
+          categorie_third_id: this.categorie_third_id,
+        }
+        this.productService.listProducts(page,data).subscribe((resp:any) => {
           console.log(resp);
           this.products = resp.products.data;
           this.totalPages = resp.total;
@@ -64,6 +73,17 @@ export class ListProductsComponent {
             console.log(err);
             this.toastr.error("API RESPONSE - COMUNIQUESE CON EL DESARROLLADOR ",err.error.message);
         })
+      }
+
+      changeDepartamento(){
+        this.categories_seconds_backups = this.categories_seconds.filter((item:any) => 
+        item.categorie_second_id == this.categorie_first_id
+        )
+      }
+      changeCategorie(){
+        this.categories_thirds_backups = this.categories_thirds.filter((item:any) => 
+        item.categorie_second_id == this.categorie_second_id
+        )
       }
     
       searchTo(){

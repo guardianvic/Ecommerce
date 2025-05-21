@@ -138,9 +138,21 @@ class ProductController extends Controller
     {
        $product = Product::findOrFail($id);
        $product->delete();
-        // PORQUE NO SE ELIMINAR UN PRODUCTO QUE YA TENGA UNA VENTA
+        // PORQUE NO SE PUEDE ELIMINAR UN PRODUCTO QUE YA TENGA UNA VENTA
        return response()->json([
             "message" => 200,
+        ]);
+    }
+
+    public function delete_imagen(string $id)
+    {
+        $product = ProductImage::findOrFail($id);
+        if($product->imagen){
+            Storage::delete($product->imagen);
+        }
+        $product->delete();
+        return response()->json([
+            "message" => 200
         ]);
     }
 }
