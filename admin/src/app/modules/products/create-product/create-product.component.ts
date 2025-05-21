@@ -91,7 +91,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
         this.isShowMultiselect = true;
         let time_date = new Date().getTime();
         this.dropdownList.push({item_id: time_date, item_text: this.word});
-        this.selectedItems.push({item_id: time_date, item_text: this.word});
+        // this.selectedItems.push({item_id: time_date, item_text: this.word});
         setTimeout(() => {
           this.word = '';
           this.isShowMultiselect = false;
@@ -200,6 +200,6 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
          config: any = {
           versionCheck: false,
           }
-      }
+    }
 
 

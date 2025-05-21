@@ -73,4 +73,14 @@ export class ProductService {
          finalize(() => this.isLoadingSubject.next(false))
        );
      }
+
+     imagenAdd(data:any){
+      this.isLoadingSubject.next(true);
+      let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+      let URL = URL_SERVICIOS+"/admin/products/imagens"; 
+      return this.http.post(URL,data,{headers: headers}).pipe(
+        finalize(() => this.isLoadingSubject.next(false))
+      );
+    }
+
 }

@@ -60,6 +60,7 @@ Route::group([
     Route::post('sliders/{id}',[SliderController::class,"update"]);
 
     Route::get('products/config',[ProductController::class,"config"]);
+    Route::post('products/imagens',[ProductController::class,"imagens"]);
     Route::resource('products',ProductController::class);
     Route::post('products/{id}',[ProductController::class,"update"]);
 });

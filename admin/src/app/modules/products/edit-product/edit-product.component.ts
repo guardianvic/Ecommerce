@@ -3,6 +3,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from '../service/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit-product',
@@ -44,10 +45,15 @@ export class EditProductComponent {
         PRODUCT_ID:string = '';
         PRODUCT_SELECTED:any;
 
+        imagen_add:any;
+        imagen_add_previsualiza:any = "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg";
+        images_files:any = [];
+
         constructor(
           public productService: ProductService,
           public toastr: ToastrService,
           private activedRoute: ActivatedRoute,
+          public modalService: NgbModal,
         ){
       
         }
@@ -101,21 +107,21 @@ export class EditProductComponent {
             console.log(resp);
   
             this.PRODUCT_SELECTED = resp.product;
-             this.title = resp.product.title;
-             this.sku = resp.product.sku;
-             this.resumen = resp.product.resumen;
-            this.state = resp.product.state;//
-             this.stock = resp.product.stock;//
-             this.price_cop = resp.product.price_cop;
-             this.price_usd = resp.product.price_usd;
-             this.description = resp.product.description;
-             this.imagen_previsualiza = resp.product.imagen;
-             this.marca_id = resp.product.brand_id;
-             this.categorie_first_id = resp.product.categorie_first_id;
-             this.categorie_second_id = resp.product.categorie_second_id;
-             this.categorie_third_id = resp.product.categorie_third_id;
-             this.selectedItems = resp.product.selectedItems;
-            //  this.images_files = resp.product.images;
+            this.title = resp.product.title;
+            this.sku = resp.product.sku;
+            this.resumen = resp.product.resumen;
+            this.state = resp.product.state;
+            this.stock = resp.product.stock;
+            this.price_cop = resp.product.price_cop;
+            this.price_usd = resp.product.price_usd;
+            this.description = resp.product.description;
+            this.imagen_previsualiza = resp.product.imagen;
+            this.marca_id = resp.product.brand_id;
+            this.categorie_first_id = resp.product.categorie_first_id;
+            this.categorie_second_id = resp.product.categorie_second_id;
+            this.categorie_third_id = resp.product.categorie_third_id;
+            this.selectedItems = resp.product.selectedItems;
+            this.images_files = resp.product.images;
   
             
             this.changeDepartamento();
@@ -149,6 +155,18 @@ export class EditProductComponent {
           reader.onloadend = () => this.imagen_previsualiza = reader.result;
           this.isLoadingView();
         }
+
+        processFileTwo($event:any){
+          if ($event.target.files[0].type.indexOf("image") < 0) {
+            this.toastr.error("Validacion","El archivo no es una imagen");
+            return;
+          }
+          this.imagen_add = $event.target.files[0];
+          let reader = new FileReader();
+          reader.readAsDataURL(this.imagen_add);
+          reader.onloadend = () => this.imagen_add_previsualiza = reader.result;
+          this.isLoadingView(); 
+        }
       
         isLoadingView(){
           this.productService.isLoadingSubject.next(true);
@@ -165,6 +183,32 @@ export class EditProductComponent {
         changeCategorie(){
           this.categories_thirds_backups = this.categories_thirds.filter((item:any) => 
             item.categorie_second_id == this.categorie_second_id)
+        }
+
+        removeImages(id:number){
+          // const modalRef = this.modalService.open(DeleteImagenAddComponent,{centered:true, size: 'md'});
+          // modalRef.componentInstance.id = id;
+      
+          // modalRef.componentInstance.ImagenD.subscribe((resp:any) => {
+          //   let INDEX = this.images_files.findIndex((item:any) => item.id == id);
+          //   if(INDEX != -1){
+          //     this.images_files.splice(INDEX,1);
+          //   }
+          // })
+        }
+      
+        addImagen() {
+          if(!this.imagen_add){
+            this.toastr.error("Validacion","ES REQUERIDO SUBIR UNA IMAGEN");
+            return;
+          }
+          let formData = new FormData();
+          formData.append("imagen_add", this.imagen_add);
+          formData.append("product_id",this.PRODUCT_ID);
+          this.productService.imagenAdd(formData).subscribe((resp:any) => {
+            console.log(resp);
+            
+          })
         }
   
         public onChange(event: any) {
@@ -194,7 +238,7 @@ export class EditProductComponent {
           formData.append("price_cop",this.price_cop+"");
           formData.append("price_usd",this.price_usd+"");
           formData.append("brand_id",this.marca_id);
-          formData.append("stock",this.stock+"");//
+          formData.append("stock",this.stock+"");
           if (this.file_imagen) {
             formData.append("portada",this.file_imagen);
           }
@@ -209,6 +253,7 @@ export class EditProductComponent {
           formData.append("resumen",this.resumen);
           formData.append("multiselect",JSON.stringify(this.selectedItems));
           formData.append("state",this.state+"");
+
           this.productService.updateProducts(this.PRODUCT_ID,formData).subscribe((resp:any) => {
             console.log(resp);
   

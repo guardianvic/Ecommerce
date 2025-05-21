@@ -4,7 +4,8 @@
         <div class="row mb-6">
             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                 <label class="fw-semibold fs-6 py-2">Titulo: (*) </label>
-                <input type="text" name="title" [(ngModel)]="title" class="form-control form-control-lg form-control-solid" placeholder="Ejemplo: The best tablet Collection 2024 " >
+                <input type="text" name="title" [(ngModel)]="title" class="form-control form-control-lg form-control-solid" 
+                placeholder="Ejemplo: The best tablet Collection 2024 " >
             </div>
 
             <div class="col-lg-4 fv-row fv-plugins-icon-container">
@@ -125,8 +126,51 @@
             <div class="">
                 <img class="img py-4" [src]="imagen_previsualiza" width="200" alt="">
             </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                <div class="row">
+                    <div class="col-8">
+                        <label class="form-label">Sube tus imagenes: (*)</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFileOImagenes"  accept=".jpeg, .bmp, .jpg, 
+                            .png, .gif, .webp"  (change)="processFileTwo($event)">
+                            <label class="custom-file-label" for="customFileOImagenes"></label>
+                        </div>
+                        <div class="">
+                            <img class="img py-4" [src]="imagen_add_previsualiza" width="100" alt="">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-primary btn-sm" (click)="addImagen()">+</button>
+                    </div>
+                    <div class="col-8">
+                        <div id="kt_table_users_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="table-responsive w-100">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_advance_table_widget_1">
+                                    <thead>
+                                        <tr class="text-left">
+                                            <th>IMAGEN</th>
+                                            <th>ACCIÓN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let imagen_ of images_files;let i=index">
+                                            <td>
+                                                <img [src]="imagen_.imagen" width="60" alt="">
+                                            </td>
+                                            <td>
+                                                <button class="ml-5 btn btn-sm btn-danger" (click)="removeImages(imagen_.id)">X</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
+
         <div class="row mb-8">
             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                 <label class="fs-6 fw-semibold mb-2">Descripción: </label>

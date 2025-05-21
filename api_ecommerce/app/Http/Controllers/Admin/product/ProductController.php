@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin\product;
 
-use Illuminate\Support\Arr;
+
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Product\Brand;
 use App\Models\Product\Product;
 use App\Models\Product\Categorie;
 use App\Http\Controllers\Controller;
+use App\Models\Product\ProductImage;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Product\ProductCollection;
@@ -25,6 +26,7 @@ class ProductController extends Controller
         $categorie_second_id = $request->categorie_second_id;
         $categorie_third_id = $request->categorie_third_id;
         $brand_id = $request->brand_id;
+        
 
         $products = Product::filterAdvanceProduct($search,$categorie_first_id,$categorie_second_id,$categorie_third_id,$brand_id)
                             ->orderBy("id","desc")->paginate(25);
@@ -73,6 +75,26 @@ class ProductController extends Controller
         ]);
     }
 
+    public function imagens(Request $request){
+        $product_id = $request->product_id;
+
+        if($request->hasFile("imagen_add")){
+            $path = Storage::putFile("products",$request->file("imagen_add"));
+        }
+
+        $product_imagen = ProductImage::create([
+            "imagen" => $path,
+            "product_id" => $product_id,
+        ]);
+
+        return response()->json([
+            "imagen" => [
+                "id" => $product_imagen->id,
+                "imagen" => env("APP_URL")."storage/".$product_imagen->imagen,
+            ]
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
@@ -88,7 +110,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $isValid = Product::where("id","<>",$id)->where("title",$request->title)->Arr::first();
+        $isValid = Product::where("id","<>",$id)->where("title",$request->title)->first();
         if ($isValid) {
             return response()->json(["message" =>403,"message_text" => " El nombre del producto ya existe :)"]);
         }
