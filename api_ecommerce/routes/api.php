@@ -9,6 +9,10 @@ use App\Http\Controllers\Admin\product\BrandController;
 use App\Http\Controllers\Admin\product\ProductController;
 use App\Http\Controllers\Admin\product\CategorieController;
 use App\Http\Controllers\Admin\Product\AttributeProductController;
+use App\Http\Controllers\Admin\Product\ProductVariationsController;
+use App\Http\Controllers\Admin\Product\ProductSpecificationsController;
+use App\Http\Controllers\Admin\Product\ProductVariationsNestedController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,5 +72,11 @@ Route::group([
     Route::post('products/{id}',[ProductController::class,"update"]);
 
     Route::resource("brands",BrandController::class);
+
+    Route::get("variations/config",[ProductVariationsController::class,"config"]);
+    Route::resource("variations",ProductVariationsController::class);
+    Route::resource("nested_variations",ProductVariationsNestedController::class);
+
+    Route::resource("specifications",ProductSpecificationsController::class);
 });
 
