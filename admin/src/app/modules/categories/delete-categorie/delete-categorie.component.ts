@@ -32,8 +32,12 @@ export class DeleteCategorieComponent {
 
   delete(){
     this.categorieService.deleteCategorie(this.categorie.id).subscribe((resp:any) => {
-      this.categorieD.emit({message: 200});
-      this.modal.close();
+      if(resp.message == 403){
+        this.toastr.error("Validación",resp.message_text);
+      }else{
+        this.categorieD.emit({message: 200});
+        this.modal.close();
+      }
     })
   
   }

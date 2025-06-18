@@ -100,7 +100,7 @@
                  class="form-control form-control-lg form-control-solid" 
                  placeholder="Ejemplo: XXXXX " >
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="!isShowMultiselect">
+            <div class="col-lg-4 col-md-4 col-sm-12 my-2" *ngIf="!isShowMultiselect">
                 <label class="fw-semibold fs-6 py-2">Etiquetas : </label>
                 <ng-multiselect-dropdown
                     [placeholder]="'custom placeholder'"
@@ -112,6 +112,18 @@
                 >
                 </ng-multiselect-dropdown>
             </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 my-2">
+                <label class="required fw-bold fs-6 mb-2">Selec. un Estado</label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="state"
+                    placeholder="Select"
+                    [(ngModel)]="state"
+                >
+                    <option value="1">Pendiente</option>
+                    <option value="2">Publico</option>
+                </select>
+            </div>
         </div>
         <div class="row mb-6">
             <div class="col-lg-6 col-md-6 col-sm-12 my-2">
@@ -121,11 +133,11 @@
                      .png, .gif, .webp"  (change)="processFile($event)">
                      <label class="custom-file-label" for="customFile"></label>
                 </div>
+                <div class="">
+                    <img class="img py-4" [src]="imagen_previsualiza" width="200" alt="">
+                </div>
             </div>  
 
-            <div class="">
-                <img class="img py-4" [src]="imagen_previsualiza" width="200" alt="">
-            </div>
             <div class="col-lg-6 col-md-6 col-sm-12 my-2">
                 <div class="row">
                     <div class="col-8">
@@ -142,7 +154,7 @@
                     <div class="col-4">
                         <button class="btn btn-primary btn-sm" (click)="addImagen()">+</button>
                     </div>
-                    <div class="col-8">
+                    <div class="col-12">
                         <div id="kt_table_users_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                             <div class="table-responsive w-100">
                                 <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_advance_table_widget_1">
@@ -171,20 +183,30 @@
             
         </div>
 
-        <div class="row mb-8">
+        <div class="row mb-6">
             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                 <label class="fs-6 fw-semibold mb-2">Descripción: </label>
                 <ckeditor [data]="description"[config]="config" 
                 (change)="onChange($event)"></ckeditor>
             </div>
             <div class="col-lg-4 fv-row fv-plugins-icon-container">
-                <label class="fs-6 fw-semibold mb-2">Resumen: </label>
-                <textarea class="form-control form-control-solid" rows="3"
-                 name="resumen" [(ngModel)]="resumen" placeholder="*******"></textarea>
+                <div class="row">
+                    <div class="col-12">
+                        <label class="fs-6 fw-semibold mb-2">Resumen: </label>
+                        <textarea class="form-control form-control-solid" rows="3" 
+                        name="resumen" [(ngModel)]="resumen" placeholder="******"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="fs-6 fw-semibold mb-2">Stock: </label>
+                        <input type="number" name="stock" [(ngModel)]="stock" 
+                        class="form-control form-control-lg form-control-solid" 
+                        placeholder="Por ejemplo:   20 PEN  ">
+                    </div>
+                </div>
             </div>
         </div>
 
-            <div class="row mb-6">
+        <div class="row mb-6">
             <div class="col-3">
                 <button class="btn btn-primary" (click)="save()" >Actualizar</button>
             </div>

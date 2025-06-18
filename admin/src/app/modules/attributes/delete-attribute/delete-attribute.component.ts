@@ -34,8 +34,12 @@ export class DeleteAttributeComponent {
   
     delete(){
       this.attributesService.deleteAttributes(this.attribute.id).subscribe((resp:any) => {
-        this.AttributeD.emit({message: 200});
-        this.modal.close();
+        if(resp.message == 403){
+          this.toastr.error("Validación",resp.message_text);
+        }else{
+          this.AttributeD.emit({message: 200});
+          this.modal.close();
+        }
       })
     
     }

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AttributesService } from '../../service/attributes.service';
 import { DeleteVariationSpecificationsComponent } from '../delete-variation-specifications/delete-variation-specifications.component';
 import { EditVariationSpecificationsComponent } from '../edit-variation-specifications/edit-variation-specifications.component';
+import { CreateNestedVariationsComponent } from './../create-nested-variations/create-nested-variations.component';
 
 @Component({
   selector: 'app-create-variation-specifications',
@@ -211,7 +212,7 @@ export class CreateVariationSpecificationsComponent {
       if(resp.message == 403){
         this.toastr.error("Validación",resp.message_text);
       }else{
-        this.toastr.success("Exito","Se registro la especificación correctamente");
+        this.toastr.success("Exito","Se registro la especificación con exito");
         this.specifications.unshift(resp.specification); 
         this.value_add = null;
         this.propertie_id = null;
@@ -286,7 +287,7 @@ export class CreateVariationSpecificationsComponent {
       if(resp.message == 403){
         this.toastr.error("Validación",resp.message_text);
       }else{
-        this.toastr.success("Exito","Se registro la variación correctamente");
+        this.toastr.success("Exito","Se registro la variación con exito");
         this.variations.unshift(resp.variation); 
         this.value_add = null;
         this.propertie_id = null;
@@ -328,8 +329,8 @@ export class CreateVariationSpecificationsComponent {
   }
 
     openAnidado(variation:any){
-      // const modal = this.modalService.open(CreateAnidadoVariationsComponent,{centered:true,size: 'lg'});
-      // modal.componentInstance.variation = variation;
-      // modal.componentInstance.attributes_variations = this.attributes_variations; 
+       const modal = this.modalService.open(CreateNestedVariationsComponent,{centered:true,size: 'lg'});
+       modal.componentInstance.variation = variation;
+       modal.componentInstance.attributes_variations = this.attributes_variations; 
    }
 }
