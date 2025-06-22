@@ -35,6 +35,7 @@ export class DeleteCategorieComponent {
       if(resp.message == 403){
         this.toastr.error("Validación",resp.message_text);
       }else{
+        this.toastr.success("La categoria se eliminó correctamente", "Eliminación exitosa");
         this.categorieD.emit({message: 200});
         this.modal.close();
       }

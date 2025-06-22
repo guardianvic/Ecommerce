@@ -32,6 +32,7 @@ export class DeleteProductComponent {
   
     delete(){
       this.productService.deleteProduct(this.product.id).subscribe((resp:any) => {
+        this.toastr.success("El producto se eliminó correctamente", "Eliminación exitosa");
         this.productD.emit({message: 200});
         this.modal.close();
       })

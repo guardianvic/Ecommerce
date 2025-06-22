@@ -5,6 +5,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\Cupone\CuponeController;
 use App\Http\Controllers\Admin\product\BrandController;
 use App\Http\Controllers\Admin\product\ProductController;
 use App\Http\Controllers\Admin\product\CategorieController;
@@ -78,5 +79,8 @@ Route::group([
     Route::resource("nested_variations",ProductVariationsNestedController::class);
 
     Route::resource("specifications",ProductSpecificationsController::class);
+
+    Route::get("cupones/config",[CuponeController::class,"config"]);
+    Route::resource("cupones",CuponeController::class);
 });
 

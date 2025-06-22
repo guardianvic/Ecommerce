@@ -73,6 +73,18 @@ const Routing: Routes = [
   path: 'brands',
   loadChildren: () => import('../modules/brands/brands.module').then((m) => m.BrandsModule),
   },
+  {
+    path: 'cupones',
+    loadChildren: () => import('../modules/cupones/cupones.module').then((m) => m.CuponesModule),
+  },
+  // {
+  //   path: 'discount',
+  //   loadChildren: () => import('../modules/discount/discount.module').then((m) => m.DiscountModule),
+  // },
+  // {
+  //   path: 'sales',
+  //   loadChildren: () => import('../modules/sales/sales.module').then((m) => m.SalesModule),
+  // },
 
 
   

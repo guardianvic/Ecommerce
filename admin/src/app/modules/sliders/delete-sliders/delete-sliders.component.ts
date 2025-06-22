@@ -32,6 +32,7 @@ export class DeleteSlidersComponent {
   
     delete(){
       this.sliderService.deleteSlider(this.slider.id).subscribe((resp:any) => {
+        this.toastr.success("El slider se eliminó correctamente", "Eliminación exitosa");
         this.SliderD.emit({message: 200});
         this.modal.close();
       })

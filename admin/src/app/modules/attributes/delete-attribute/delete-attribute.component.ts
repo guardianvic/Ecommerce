@@ -37,6 +37,7 @@ export class DeleteAttributeComponent {
         if(resp.message == 403){
           this.toastr.error("Validación",resp.message_text);
         }else{
+          this.toastr.success("El atributo se eliminó correctamente", "Eliminación exitosa");
           this.AttributeD.emit({message: 200});
           this.modal.close();
         }
