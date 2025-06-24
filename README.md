@@ -181,7 +181,7 @@ ng build --configuration production
 
 ## 👨‍💻 Autor
 
-Proyecto desarrollado por **\[Victor Alfonso Rojas Lararte y Leiby Iván Rodríguez Ortega "MultiEcommerce"]**
+Proyecto desarrollado por **\[Victor Alfonso Rojas Larrarte y Leiby Iván Rodríguez Ortega "MultiEcommerce"]**
 
 ---
 
