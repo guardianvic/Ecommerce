@@ -3,6 +3,7 @@ import { DiscountService } from '../service/discount.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteDiscountComponent } from '../delete-discount/delete-discount.component';
+import { URL_TIENDA } from 'src/app/config/config';
 
 @Component({
   selector: 'app-list-discount',
@@ -98,11 +99,11 @@ export class ListDiscountComponent {
 
    copyLink(discount:any) {
      var aux = document.createElement("input");
-     aux.setAttribute("value","/discount/"+discount.code);
+     aux.setAttribute("value",URL_TIENDA+"/discount/"+discount.code);
      document.body.appendChild(aux);
      aux.select();
      document.execCommand("copy");
      document.body.removeChild(aux);
-     this.toastr.info("Ya tienes tu link de descuento","Copiado");
+     this.toastr.info("Ya tienes tu link de descuento","Informacion");
    }
 }

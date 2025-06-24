@@ -207,7 +207,7 @@
             </div>
             <div class="col-4">
                 <div class="row">
-                    <div class="col-12" *ngIf="discount_type == 1">
+                    <div class="col-8" *ngIf="discount_type == 1">
                         <div id="kt_table_users_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                             <div class="table-responsive w-100">
                                 <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_advance_table_widget_1">
@@ -227,7 +227,9 @@
                                             <td>
                                                 <button class="ml-5 btn btn-sm btn-danger" (click)="removeProduct(product)">X</button>
                                                 <a href="#" onclick="return false;" (click)="copyLink(product)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                    <i class="ki-duotone ki-toggle-on fs-2 mx-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
+                                                    <i class="ki-duotone ki-toggle-on fs-2 mx-1"><span class="path1"></span>
+                                                        <span class="path2"></span><span class="path3"></span>
+                                                        <span class="path4"></span><span class="path5"></span></i>  </a>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Discount;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\Discount\DiscountResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class DiscountCollection extends ResourceCollection
@@ -14,6 +15,8 @@ class DiscountCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "data" => DiscountResource::collection($this->collection),
+        ];
     }
 }

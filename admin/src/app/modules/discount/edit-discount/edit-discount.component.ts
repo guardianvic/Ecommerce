@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DiscountService } from '../service/discount.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { URL_TIENDA } from 'src/app/config/config';
 
 @Component({
   selector: 'app-edit-discount',
@@ -90,12 +91,12 @@ export class EditDiscountComponent {
   
   copyLink(product:any) {
     var aux = document.createElement("input");
-    aux.setAttribute("value","/producto/"+product.slug+"?campaing_discount="+this.DISCOUNT_SELECTED.code);
+    aux.setAttribute("value",URL_TIENDA+"/producto/"+product.slug+"?campaing_discount="+this.DISCOUNT_SELECTED.code);
     document.body.appendChild(aux);
     aux.select();
     document.execCommand("copy");
     document.body.removeChild(aux);
-    this.toastr.info("Ya tienes tu link de descuento","Copiado");
+    this.toastr.info("Ya tienes tu link de descuento","Informacion");
   }
 
   save(){
@@ -139,15 +140,15 @@ export class EditDiscountComponent {
         this.toastr.error("Validación",resp.message_text);
       }else{
         this.toastr.success("LA CAMPAÑA DE DESCUENTO SE HA EDITADO CORRECTAMENTE","Exito");
-        // this.type_discount = 1;
-        // this.discount_type = 1;
-        // this.discount = 0;
-        // this.products_add = [];
-        // this.categories_add = [];
-        // this.brands_add = [];
-        // this.product_id = null;
-        // this.categorie_id = null;
-        // this.brand_id = null;
+         this.type_discount = 1;
+         this.discount_type = 1;
+         this.discount = 0;
+         this.products_add = [];
+         this.categories_add = [];
+         this.brands_add = [];
+         this.product_id = null;
+         this.categorie_id = null;
+         this.brand_id = null;
       }
 
     })

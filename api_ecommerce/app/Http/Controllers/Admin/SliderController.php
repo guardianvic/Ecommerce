@@ -28,6 +28,9 @@ class SliderController extends Controller
                     "label" => $slider->label,                
                     "link" => $slider->link,        
                     "state" => $slider->state,
+                    "type_slider" => $slider->type_slider,
+                    "price_original" => $slider->price_original,
+                    "price_campaing" => $slider->price_campaing,
                     "color" => $slider->color,
                     "imagen" => env("APP_URL")."storage/".$slider->imagen,
                 ];
@@ -56,14 +59,16 @@ class SliderController extends Controller
         $slider = Slider::findOrFail($id);
 
         return response()->json(["slider" => [
-
-            "id" => $slider->id,
-            "title" => $slider->title,
-            "subtitle" => $slider->subtitle,
-            "label" => $slider->label,                
-            "link" => $slider->link,        
-            "state" => $slider->state,
-            "color" => $slider->color,
+            "id" => $slider->id ,
+            "title" => $slider->title ,
+            "subtitle" => $slider->subtitle ,
+            "label" => $slider->label ,
+            "link" => $slider->link ,
+            "state" => $slider->state ,
+            "color" => $slider->color ,
+            "type_slider" => $slider->type_slider,
+                    "price_original" => $slider->price_original,
+                    "price_campaing" => $slider->price_campaing,
             "imagen" => env("APP_URL")."storage/".$slider->imagen,
         ]]);
     }

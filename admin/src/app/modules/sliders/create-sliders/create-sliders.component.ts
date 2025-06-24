@@ -19,6 +19,10 @@ export class CreateSlidersComponent {
   
     imagen_previsualiza:any = "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg";
     file_imagen:any = null;
+    type_slider:any = 1;
+    price_original:any = null;
+    price_campaing:any = null;
+  
   
     isLoading$:any;
   
@@ -41,7 +45,7 @@ export class CreateSlidersComponent {
   
     processFile($event:any){
       if ($event.target.files[0].type.indexOf("image") < 0) {
-        this.toastr.error("Validacion","El archivo no es una imagen");
+        this.toastr.error("El archivo no es una imagen","Validacion");
         return;
       }
       this.file_imagen = $event.target.files[0];
@@ -61,7 +65,7 @@ export class CreateSlidersComponent {
     save(){
       
       if (!this.title || !this.subtitle || !this.file_imagen) {
-        this.toastr.error("Validacion","Los campos con el * son obligatorios");
+        this.toastr.error("Los campos con el * son obligatorios","Validacion");
         return;      
       }
   
@@ -72,12 +76,20 @@ export class CreateSlidersComponent {
       }
         formData.append("subtitle",this.subtitle+"");
         formData.append("image",this.file_imagen);
-        if (this.link) {
-          formData.append("link",this.link); 
-        }
-        if (this.color) {
-          formData.append("color",this.color); 
-        }
+        formData.append("type_slider",this.type_slider);
+
+      if(this.price_original){
+        formData.append("price_original",this.price_original);
+      }
+      if(this.price_campaing){
+        formData.append("price_campaing",this.price_campaing);
+       }
+      if (this.link) {
+        formData.append("link",this.link); 
+      }
+      if (this.color) {
+        formData.append("color",this.color); 
+      }
        
       this.sliderService.createSliders(formData).subscribe((resp:any) => {
         console.log(resp);
@@ -89,7 +101,7 @@ export class CreateSlidersComponent {
         this.color ='';
         this.file_imagen = null;
         this.imagen_previsualiza = "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2-dark.svg";
-        this.toastr.success("Exito","El slider se registro con exito");
+        this.toastr.success("El slider se registro con exito","Exito");
         
       });
     }
