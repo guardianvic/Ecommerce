@@ -5,6 +5,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Ecommerce\HomeController;
 use App\Http\Controllers\Admin\Cupone\CuponeController;
 use App\Http\Controllers\Admin\product\BrandController;
 use App\Http\Controllers\Admin\product\ProductController;
@@ -85,5 +86,60 @@ Route::group([
     Route::resource("cupones",CuponeController::class);
 
     Route::resource("discounts",DiscountController::class);
+
+    // Route::post("sales/list",[SalesController::class,"list"]);
+
+    // Route::group([
+    //     "prefix" => "kpi",
+    // ],function ($router) {
+    //     Route::get("config",[KpiSaleReportController::class,"config"]);
+    //     Route::post("report_sales_country_for_year",[KpiSaleReportController::class,"report_sales_country_for_year"]);
+    //     Route::post("report_sales_week_categorias",[KpiSaleReportController::class,"report_sales_week_categorias"]);
+    //     Route::post("report_sales_week_discounts",[KpiSaleReportController::class,"report_sales_week_discounts"]);
+    //     Route::post("report_sales_month_selected",[KpiSaleReportController::class,"report_sales_month_selected"]);
+    //     Route::post("report_sales_for_month_year_selected",[KpiSaleReportController::class,"report_sales_for_month_year_selected"]);
+    //     Route::post("report_discount_cupone_year",[KpiSaleReportController::class,"report_discount_cupone_year"]);
+    //     Route::post("report_sales_for_categories",[KpiSaleReportController::class,"report_sales_for_categories"]);
+    //     Route::post("report_sales_for_categories_details",[KpiSaleReportController::class,"report_sales_for_categories_details"]);
+    //     Route::post("report_sales_for_brand",[KpiSaleReportController::class,"report_sales_for_brand"]);
+    // });
+});
+
+// Route::get("sales/list-excel",[SalesController::class,"list_excel"]);
+// Route::get("sales/report-pdf/{id}",[SalesController::class,"report_pdf"]);
+
+Route::group([
+    "prefix" => "ecommerce",
+],function ($router) {
+    
+    Route::get("home",[HomeController::class,"home"]);
+    // Route::get("menus",[HomeController::class,"menus"]);
+
+    // Route::get("product/{slug}",[HomeController::class,"show_product"]);
+    // Route::get("config-filter-advance",[HomeController::class,"config_filter_advance"]);
+    // Route::post("filter-advance-product",[HomeController::class,"filter_advance_product"]);
+    // Route::post("campaing-discount-link",[HomeController::class,"campaing_discount_link"]);
+
+    // Route::group([
+    //     "middleware" => 'auth:api',
+    // ],function($router) {
+    //     Route::delete("carts/delete_all",[CartController::class,"delete_all"]);
+    //     Route::post("carts/apply_cupon",[CartController::class,"apply_cupon"]);
+    //     Route::resource('carts', CartController::class);
+    //     Route::resource('user_address', UserAddressController::class);
+        
+    //     Route::get("mercadopago",[SaleController::class,"mercadopago"]);
+    //     Route::get("sale/{id}",[SaleController::class,"show"]);
+    //     Route::post("checkout",[SaleController::class,"store"]);
+    //     Route::post("checkout-temp",[SaleController::class,"checkout_temp"]);
+    //     Route::post("checkout-mercadopago",[SaleController::class,"checkout_mercadopago"]);
+        
+    //     Route::get("profile_client/me",[AuthController::class,"me"]);
+    //     Route::get("profile_client/orders",[SaleController::class,"orders"]);
+    //     Route::post("profile_client",[AuthController::class,"update"]);
+    //     Route::resource('reviews', ReviewController::class);
+
+    // });
+
 });
 
