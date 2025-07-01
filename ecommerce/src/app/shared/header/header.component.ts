@@ -1,5 +1,4 @@
 import { afterNextRender, Component } from '@angular/core';
-import { Router } from 'express';
 import { ToastrService } from 'ngx-toastr';
 import { HomeService } from '../../pages/home/service/home.service';
 import { CommonModule } from '@angular/common';
@@ -20,10 +19,10 @@ export class HeaderComponent {
   constructor(
         public homeService: HomeService,
         private toastr: ToastrService,
-        private router: Router,
+        
       ) {
           afterNextRender(() => {
-            this.homeService.home().subscribe((resp:any) => {
+            this.homeService.menus().subscribe((resp:any) => {
               console.log(resp);
               this.categories_menus = resp.categories_menus;
               
@@ -31,9 +30,9 @@ export class HeaderComponent {
         })      
       } 
       
-      getIcomMenu(menu:any){
-        var miDiv:any = document.getElementById('icom-'+menu.id);
-        miDiv.innerHTML = menu.icom; 
+      getIconMenu(menu:any){
+        var miDiv:any = document.getElementById('icon-'+menu.id);
+        miDiv.innerHTML = menu.icon; 
         return '';
       }
 }

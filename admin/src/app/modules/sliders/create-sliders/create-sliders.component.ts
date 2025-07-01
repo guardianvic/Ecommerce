@@ -75,7 +75,9 @@ export class CreateSlidersComponent {
         formData.append("label",this.label);      
       }
         formData.append("subtitle",this.subtitle+"");
+        
         formData.append("image",this.file_imagen);
+
         formData.append("type_slider",this.type_slider);
 
       if(this.price_original){

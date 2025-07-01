@@ -48,10 +48,23 @@
                 </div>
             </div>
 
-            
             <div class="col-lg-2 fv-row fv-plugins-icon-container">
                 <label for="etiqueta_especial" class="required fw-bold fs-6 mb-2"> Color : </label>
                 <input class="form-control" type="color" id="color" name="color" [(ngModel)]="color" />
+            </div> 
+
+            <div class="col-lg-4 fv-row fv-plugins-icon-container">
+                <label class="required fw-bold fs-6 mb-2">Selec. un Tipo</label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="type_slider"
+                    placeholder="Select"
+                    [(ngModel)]="type_slider"
+                >
+                    <option value="1">Slider Principal</option>
+                    <option value="2">Slider Secundario</option>
+                    <option value="3">Slider por Productos</option>
+                </select>
             </div> 
 
             <div class="col-lg-2 fv-row ">
