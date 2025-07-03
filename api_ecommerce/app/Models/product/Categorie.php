@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Product\Product;
 use App\Models\Product\Categorie;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Discount\DiscountCategorie;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

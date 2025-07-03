@@ -10,7 +10,7 @@ declare function SLIDER_PRINCIPAL([]):any;
 declare var $:any;
 declare function DATA_VALUES([]):any;
 declare function PRODUCTS_CAROUSEL_HOME([]):any;
-// declare function MODAL_PRODUCT_DETAIL([]):any;
+declare function MODAL_PRODUCT_DETAIL([]):any;
 
 @Component({
   selector: 'app-home',
@@ -37,6 +37,13 @@ export class HomeComponent {
     LASTS_PRODUCT_FEATURE:any = [];
     LASTS_PRODUCT_SELLING:any = [];
 
+    DISCOUNT_FLASH:any;
+    DISCOUNT_FLASH_PRODUCTS:any = [];
+
+    product_selected:any = null;
+    variation_selected:any = null;
+    currency:string = 'COP';
+
   
     constructor(
       public homeService: HomeService,
@@ -59,6 +66,9 @@ export class HomeComponent {
             this.LASTS_PRODUCT_DISCOUNT = resp.product_last_discounts.data;
             this.LASTS_PRODUCT_FEATURE = resp.product_last_featured.data;
             this.LASTS_PRODUCT_SELLING = resp.product_last_selling.data;
+
+            this.DISCOUNT_FLASH = resp.discount_flash;
+            this.DISCOUNT_FLASH_PRODUCTS = resp.discount_flash_products;
 
             setTimeout(() => {
               SLIDER_PRINCIPAL($); 
@@ -97,8 +107,76 @@ export class HomeComponent {
         return '';
       }
 
+      getNewTotal(PRODUCT: any, DISCOUNT_FLASH_P: any): string {
+        let total: number;
+      
+        if (DISCOUNT_FLASH_P.type_discount == 1) {
+          total = PRODUCT.price_cop - PRODUCT.price_cop * (DISCOUNT_FLASH_P.discount * 0.01);
+        } else {
+          total = PRODUCT.price_cop - DISCOUNT_FLASH_P.discount;
+        }
+      
+        const formatoCOP = new Intl.NumberFormat('es-CO', {
+          style: 'currency',
+          currency: 'COP',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      
+        return formatoCOP.format(total);
+      }
+      
       
 
-  }
+      getTotalPriceProduct(PRODUCT: any): string {
+        if (PRODUCT.discount_g) {
+          return this.getNewTotal(PRODUCT, PRODUCT.discount_g); 
+        }
+      
+        const total = this.currency === 'COP' ? PRODUCT.price_cop : PRODUCT.price_usd;
+      
+        const formatoMoneda = new Intl.NumberFormat('es-CO', {
+          style: 'currency',
+          currency: this.currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      
+        return formatoMoneda.format(total);
+      }
+      
+      
+    
+      getTotalCurrency(PRODUCT: any): string {
+        const valor = this.currency === 'COP' ? PRODUCT.price_cop : PRODUCT.price_usd;
+      
+        const formatoMoneda = new Intl.NumberFormat('es-CO', {
+          style: 'currency',
+          currency: this.currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      
+        return formatoMoneda.format(valor);
+      }
+
+      openDetailProduct(PRODUCT:any,DISCOUNT_FLASH:any = null){
+        this.product_selected = PRODUCT;
+        this.variation_selected = null;
+        setTimeout(() => {
+          // setTimeout(() => {
+          //   if(DISCOUNT_FLASH){
+          //     this.product_selected.discount_g = DISCOUNT_FLASH;
+          //   }
+          // }, 25);
+          // this.product_selected = PRODUCT;
+           MODAL_PRODUCT_DETAIL($);
+        }, 50);
+      
+      
+      }
+    }   
+
+  
 
   
