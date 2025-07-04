@@ -44,6 +44,8 @@ export class HomeComponent {
     variation_selected:any = null;
     currency:string = 'COP';
 
+    subvariation_selected:any = null;
+
   
     constructor(
       public homeService: HomeService,
@@ -175,7 +177,17 @@ export class HomeComponent {
       
       
       }
-    }   
+
+      selectedVariation(variation:any){
+        this.variation_selected = null;
+        setTimeout(() => {
+          this.variation_selected = variation;
+          MODAL_PRODUCT_DETAIL($);
+        }, 50);
+      }    
+
+      
+   }   
 
   
 

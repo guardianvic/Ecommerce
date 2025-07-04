@@ -357,7 +357,7 @@
                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7806 7.42904C15.4025 7.42904 15.0821 7.13968 15.0508 6.75775C14.9864 5.95687 14.4491 5.2807 13.6841 5.03421C13.2983 4.9095 13.0873 4.49737 13.2113 4.11446C13.3373 3.73059 13.7467 3.52209 14.1335 3.6429C15.4651 4.07257 16.398 5.24855 16.5123 6.63888C16.5445 7.04127 16.2446 7.39397 15.8412 7.42612C15.8206 7.42807 15.8011 7.42904 15.7806 7.42904Z" fill="currentColor"/>
                                                 </svg>                                                                                
                                                    
-                                                <span class="tp-product-tooltip">Add To Wishlist</span>
+                                                <span class="tp-product-tooltip">Añadir a lista de deseos</span>
                                              </button>
                                           </div>
                                        </div>
@@ -1639,8 +1639,32 @@
                      <div class="tp-product-details-variation">
                         <!-- single item -->
                         <div class="tp-product-details-variation-item">
-                           <h4 class="tp-product-details-variation-title">Color :</h4>
-                           <div class="tp-product-details-variation-list">
+                           @for(variation_p of product_selected.variations;track variation_p.attribute_id){
+                              <h4 class="tp-product-details-variation-title">{{ variation_p.attribute.name }} </h4>
+                              <div class="tp-product-details-variation-list">
+                              @for(variation of variation_p.variations;track variation.id){
+                                 @if(variation.propertie && variation.propertie.code){                                
+                                      <button type="button" class="color tp-color-variation-btn mx-1" (click)="selectedVariation(variation)">
+                                         <span [attr.data-bg-color]="variation.propertie.code"></span>
+                                         <span class="tp-color-variation-tootltip">{{ variation.propertie.name }}</span>
+                                      </button>
+                                 }
+                                 @if(variation.propertie && !variation.propertie.code ){
+                                    <button type="button" class=" tp-size-variation-btn" (click)="selectedVariation(variation)"style="width: 80px !important;" >
+                                       <span>{{ variation.propertie.name }}</span>
+                                    </button>
+                                 }
+                                 @if(!variation.propertie ){
+                                    <button type="button" class=" tp-size-variation-btn" (click)="selectedVariation(variation)"style="width: 80px !important;" >
+                                      <span>{{ variation.value_add }}</span> 
+                                    </button>
+                                   
+                                 }
+                              }
+                              </div>
+
+                           }
+                           <!-- <div class="tp-product-details-variation-list">
                               <button type="button" class="color tp-color-variation-btn" >
                                  <span data-bg-color="#F8B655"></span>
                                  <span class="tp-color-variation-tootltip">Yellow</span>
@@ -1657,7 +1681,35 @@
                                  <span data-bg-color="#B4505A"></span>
                                  <span class="tp-color-variation-tootltip">Brown</span>
                               </button>
-                           </div>
+                           </div> -->
+                        </div>
+
+                        <div class="tp-product-details-variation-item" *ngIf="variation_selected">
+                           
+                              <h4 class="tp-product-details-variation-title">{{ variation_selected.subvariation.attribute.name }} </h4>
+                              <div class="tp-product-details-variation-list">
+                              @for(subvariation of variation_selected.subvariations;track subvariation.id){
+                                 @if(subvariation.propertie && subvariation.propertie.code){                                
+                                      <button type="button" class="color tp-color-variation-btn mx-1" >
+                                         <span [attr.data-bg-color]="subvariation.propertie.code"></span>
+                                         <span class="tp-color-variation-tootltip">{{ subvariation.propertie.name }}</span>
+                                      </button>
+                                 }
+                                 @if(subvariation.propertie && !subvariation.propertie.code ){
+                                    <button type="button" class=" tp-size-variation-btn" style="width: 80px !important;" >
+                                       <span>{{ subvariation.propertie.name }}</span>
+                                    </button>
+                                 }
+                                 @if(!subvariation.propertie ){
+                                    <button type="button" class=" tp-size-variation-btn" style="width: 80px !important;" >
+                                      <span>{{ subvariation.value_add }}</span> 
+                                    </button>
+                                   
+                                 }
+                              }
+                              </div>
+
+                           
                         </div>
                      </div>
   
