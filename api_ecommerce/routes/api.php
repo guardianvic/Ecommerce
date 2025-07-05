@@ -115,7 +115,7 @@ Route::group([
     Route::get("home",[HomeController::class,"home"]);
     Route::get("menus",[HomeController::class,"menus"]);
 
-    // Route::get("product/{slug}",[HomeController::class,"show_product"]);
+     Route::get("product/{slug}",[HomeController::class,"show_product"]);
     // Route::get("config-filter-advance",[HomeController::class,"config_filter_advance"]);
     // Route::post("filter-advance-product",[HomeController::class,"filter_advance_product"]);
     // Route::post("campaing-discount-link",[HomeController::class,"campaing_discount_link"]);
