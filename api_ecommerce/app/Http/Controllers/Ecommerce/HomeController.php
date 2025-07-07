@@ -182,13 +182,15 @@ class HomeController extends Controller
                 "message_text" => "EL PRODUCTO NO EXISTE" 
             ]);
         }
-
+        $product_relateds = Product::where("categorie_first_id",$product->categorie_first_id)->where("state",2)->get();
         
+        // $reviews = Review::where("product_id",$product->id)->get();
         return response()->json([
                 "message" => 200,
                 "product" => ProductEcommerceResource::make($product),
+                "product_relateds" => ProductEcommerceCollection::make($product_relateds),
           
-            ]);
+        ]);
            
     }
 }
