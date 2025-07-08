@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ModalProductComponent } from '../guest-view/component/modal-product/modal-product.component';
 
 
 declare function SLIDER_PRINCIPAL([]):any;
@@ -15,7 +16,7 @@ declare function MODAL_PRODUCT_DETAIL([]):any;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule,RouterModule,CommonModule],
+  imports: [FormsModule,RouterModule,CommonModule,ModalProductComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { afterRender, Component } from '@angular/core';
 import { HomeService } from '../../home/service/home.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ModalProductComponent } from '../component/modal-product/modal-product.component';
 
 
  declare function MODAL_PRODUCT_DETAIL([]):any;
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-landing-product',
   standalone: true,
-  imports: [CommonModule,FormsModule,RouterModule],
+  imports: [CommonModule,FormsModule,RouterModule,ModalProductComponent],
   templateUrl: './landing-product.component.html',
   styleUrl: './landing-product.component.css'
 })
@@ -25,7 +26,7 @@ export class LandingProductComponent {
   variation_selected:any;
   sub_variation_selected:any;
   PRODUCT_RELATEDS:any = [];
-  // product_selected_modal:any;
+  product_selected_modal:any;
   // CAMPAING_CODE:any;
   // DISCOUNT_CAMPAING:any;
 
@@ -53,6 +54,14 @@ export class LandingProductComponent {
          this.PRODUCT_SELECTED = resp.product;
          this.PRODUCT_RELATEDS = resp.product_relateds.data;
        }
+      })
+
+      afterRender(() => {
+        setTimeout(() => {
+          MODAL_PRODUCT_DETAIL($);
+          // LANDING_PRODUCT($);
+        }, 50);
+        // this.currency = this.cookieService.get("currency") ? this.cookieService.get("currency") : 'COP';
       })
   }
 
@@ -112,7 +121,7 @@ export class LandingProductComponent {
     setTimeout(() => {
       this.plus += variation.add_price;
       this.variation_selected = variation;
-      MODAL_PRODUCT_DETAIL($);
+      // MODAL_PRODUCT_DETAIL($);
     }, 50);
   }
 
@@ -125,10 +134,10 @@ export class LandingProductComponent {
     }, 50);
   }
 
-  // openDetailModal(PRODUCT:any){
-  //   this.product_selected_modal = null;
-  //   setTimeout(() => {
-  //     this.product_selected_modal = PRODUCT;
-  //   }, 50);
-  // }
+   openDetailModal(PRODUCT:any){
+     this.product_selected_modal = null;
+     setTimeout(() => {
+       this.product_selected_modal = PRODUCT;
+     }, 50);
+   }
 } 
