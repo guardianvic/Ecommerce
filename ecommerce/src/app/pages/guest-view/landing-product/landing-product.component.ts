@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalProductComponent } from '../component/modal-product/modal-product.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
  declare function MODAL_PRODUCT_DETAIL([]):any;
@@ -27,8 +28,8 @@ export class LandingProductComponent {
   sub_variation_selected:any;
   PRODUCT_RELATEDS:any = [];
   product_selected_modal:any;
-  // CAMPAING_CODE:any;
-  // DISCOUNT_CAMPAING:any;
+  CAMPAING_CODE:any;
+  DISCOUNT_CAMPAING:any;
 
   currency:string = 'COP';
   plus:number = 0;
@@ -40,12 +41,16 @@ export class LandingProductComponent {
     public activedRoute: ActivatedRoute,
      private toastr: ToastrService,
      private router:Router,
+     private cookieService: CookieService,
   ){  
       this.activedRoute.params.subscribe((resp:any) => {
       this.PRODUCT_SLUG = resp.slug;
       })
+      this.activedRoute.queryParams.subscribe((resp:any) => {
+        this.CAMPAING_CODE = resp.campaing_discount;
+      })
 
-      this.homeService.showProduct(this.PRODUCT_SLUG).subscribe((resp:any) => {
+      this.homeService.showProduct(this.PRODUCT_SLUG,this.CAMPAING_CODE).subscribe((resp:any) => {
        console.log(resp);
        if (resp.message == 403) {
         this.toastr.error("Validacion",resp.message_text);
@@ -53,38 +58,58 @@ export class LandingProductComponent {
        }else{
          this.PRODUCT_SELECTED = resp.product;
          this.PRODUCT_RELATEDS = resp.product_relateds.data;
+          this.DISCOUNT_CAMPAING = resp.discount_campaing;
+            // this.reviews = resp.reviews;
+            if(this.DISCOUNT_CAMPAING){
+              this.PRODUCT_SELECTED.discount_g = this.DISCOUNT_CAMPAING;
+            } 
        }
       })
 
       afterRender(() => {
         setTimeout(() => {
           MODAL_PRODUCT_DETAIL($);
-          // LANDING_PRODUCT($);
+           LANDING_PRODUCT($);
         }, 50);
-        // this.currency = this.cookieService.get("currency") ? this.cookieService.get("currency") : 'COP';
+         this.currency = this.cookieService.get("currency") ? this.cookieService.get("currency") : 'COP';
       })
   }
 
-  getNewTotal(PRODUCT: any, DISCOUNT_FLASH_P: any): string {
+  // ngOnInit(): void {
+  //   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //   //Add 'implements OnInit' to the class.
+  //   setTimeout(() => {
+  //     MODAL_QUANTITY_LANDING($);
+  //   }, 50);
+  // }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    
+  }
+
+  getNewTotal(PRODUCT: any, DISCOUNT_FLASH_P: any) {
+    let price = this.currency === 'COP' ? PRODUCT.price_cop : PRODUCT.price_usd;
     let total: number;
   
-    if (DISCOUNT_FLASH_P.type_discount == 1) {
-      total = PRODUCT.price_cop - PRODUCT.price_cop * (DISCOUNT_FLASH_P.discount * 0.01);
+    if (DISCOUNT_FLASH_P.type_discount === 1) {
+      total = price - price * (DISCOUNT_FLASH_P.discount * 0.01);
     } else {
-      total = PRODUCT.price_cop - DISCOUNT_FLASH_P.discount;
+      total = price - DISCOUNT_FLASH_P.discount;
     }
   
-    const formatoCOP = new Intl.NumberFormat('es-CO', {
+    const formato = new Intl.NumberFormat('es-CO', {
       style: 'currency',
-      currency: 'COP',
+      currency: this.currency,
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
   
-    return formatoCOP.format(total);
+    return formato.format(total);
   }
   
-  getTotalPriceProduct(PRODUCT: any): string {
+  getTotalPriceProduct(PRODUCT: any) {
     if (PRODUCT.discount_g) {
       return this.getNewTotal(PRODUCT, PRODUCT.discount_g); 
     }
@@ -101,7 +126,7 @@ export class LandingProductComponent {
     return formatoMoneda.format(total);
   }
 
-  getTotalCurrency(PRODUCT: any): string {
+  getTotalCurrency(PRODUCT: any) {
     const valor = this.currency === 'COP' ? PRODUCT.price_cop : PRODUCT.price_usd;
   
     const formatoMoneda = new Intl.NumberFormat('es-CO', {

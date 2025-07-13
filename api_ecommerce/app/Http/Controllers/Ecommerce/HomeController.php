@@ -173,7 +173,11 @@ class HomeController extends Controller
     }
 
     public function show_product(Request $request,$slug){
-       
+        $campaing_discount = $request->get("campaing_discount");
+        $discount = null;
+        if($campaing_discount){
+            $discount = Discount::where("code",$campaing_discount)->first();
+        }
         $product = Product::where("slug",$slug)->where("state",2)->first();
 
         if(!$product){

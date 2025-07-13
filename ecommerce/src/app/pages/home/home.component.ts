@@ -1,10 +1,12 @@
-import { afterNextRender, Component } from '@angular/core';
+import { afterNextRender, afterRender, Component } from '@angular/core';
 import { HomeService } from './service/home.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ModalProductComponent } from '../guest-view/component/modal-product/modal-product.component';
+import { CookieService } from 'ngx-cookie-service';
+
 
 
 declare function SLIDER_PRINCIPAL([]):any;
@@ -50,10 +52,11 @@ export class HomeComponent {
   
     constructor(
       public homeService: HomeService,
+      private cookieService: CookieService,
       private toastr: ToastrService,
       private router: Router,
     ) {
-        afterNextRender(() => {
+        //afterNextRender(() => {
           this.homeService.home().subscribe((resp:any) => {
             console.log(resp);
             this.SLIDERS = resp.sliders_principal;
@@ -73,13 +76,26 @@ export class HomeComponent {
             this.DISCOUNT_FLASH = resp.discount_flash;
             this.DISCOUNT_FLASH_PRODUCTS = resp.discount_flash_products;
 
+          })
+          //}) 
+          afterRender(() => {
             setTimeout(() => {
               SLIDER_PRINCIPAL($); 
               DATA_VALUES($);
-              PRODUCTS_CAROUSEL_HOME($); 
+              PRODUCTS_CAROUSEL_HOME($);
+              this.SLIDERS.forEach((SLIDER:any) => {
+                this.getLabelSlider(SLIDER)
+                this.getSubtitleSlider(SLIDER)
+              });
+              this.BANNERS_SECUNDARIOS.forEach((BANNER:any,index:number) => {
+                if(index == 0){
+                  this.getTitleBannerSecundario(BANNER,'title-banner-s-'+BANNER.id);
+                }else{
+                  this.getTitleBannerSecundario(BANNER,'title-banner-sa-'+BANNER.id);
+                }
+              }); 
             }, 50);
-          })
-        })      
+          })     
       }      
             
       
@@ -89,7 +105,9 @@ export class HomeComponent {
       ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
-        
+         this.currency = this.cookieService.get("currency") ? this.cookieService.get("currency") : 'COP';
+       
+          
       }
 
       getLabelSlider(SLIDER:any){
@@ -110,28 +128,27 @@ export class HomeComponent {
         return '';
       }
 
-      getNewTotal(PRODUCT: any, DISCOUNT_FLASH_P: any): string {
+      getNewTotal(PRODUCT: any, DISCOUNT_FLASH_P: any) {
+        let price = this.currency === 'COP' ? PRODUCT.price_cop : PRODUCT.price_usd;
         let total: number;
       
-        if (DISCOUNT_FLASH_P.type_discount == 1) {
-          total = PRODUCT.price_cop - PRODUCT.price_cop * (DISCOUNT_FLASH_P.discount * 0.01);
+        if (DISCOUNT_FLASH_P.type_discount === 1) {
+          total = price - price * (DISCOUNT_FLASH_P.discount * 0.01);
         } else {
-          total = PRODUCT.price_cop - DISCOUNT_FLASH_P.discount;
+          total = price - DISCOUNT_FLASH_P.discount;
         }
       
-        const formatoCOP = new Intl.NumberFormat('es-CO', {
+        const formato = new Intl.NumberFormat('es-CO', {
           style: 'currency',
-          currency: 'COP',
+          currency: this.currency,
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
         });
       
-        return formatoCOP.format(total);
-      }
-      
-      
+        return formato.format(total);
+      }        
 
-      getTotalPriceProduct(PRODUCT: any): string {
+      getTotalPriceProduct(PRODUCT: any) {
         if (PRODUCT.discount_g) {
           return this.getNewTotal(PRODUCT, PRODUCT.discount_g); 
         }
@@ -146,9 +163,7 @@ export class HomeComponent {
         });
       
         return formatoMoneda.format(total);
-      }
-      
-      
+      } 
     
       getTotalCurrency(PRODUCT: any): string {
         const valor = this.currency === 'COP' ? PRODUCT.price_cop : PRODUCT.price_usd;
@@ -167,13 +182,13 @@ export class HomeComponent {
         this.product_selected = PRODUCT;
         this.variation_selected = null;
         setTimeout(() => {
-          // setTimeout(() => {
-          //   if(DISCOUNT_FLASH){
-          //     this.product_selected.discount_g = DISCOUNT_FLASH;
-          //   }
-          // }, 25);
-          // this.product_selected = PRODUCT;
-           MODAL_PRODUCT_DETAIL($);
+          setTimeout(() => {
+            if(DISCOUNT_FLASH){
+              this.product_selected.discount_g = DISCOUNT_FLASH;
+            }
+          }, 25);
+          this.product_selected = PRODUCT;
+          //  MODAL_PRODUCT_DETAIL($);
         }, 50);
       
       
