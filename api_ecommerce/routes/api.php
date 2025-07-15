@@ -5,6 +5,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Ecommerce\CartController;
 use App\Http\Controllers\Ecommerce\HomeController;
 use App\Http\Controllers\Admin\Cupone\CuponeController;
 use App\Http\Controllers\Admin\product\BrandController;
@@ -120,12 +121,12 @@ Route::group([
     // Route::post("filter-advance-product",[HomeController::class,"filter_advance_product"]);
     // Route::post("campaing-discount-link",[HomeController::class,"campaing_discount_link"]);
 
-    // Route::group([
-    //     "middleware" => 'auth:api',
-    // ],function($router) {
-    //     Route::delete("carts/delete_all",[CartController::class,"delete_all"]);
+     Route::group([
+         "middleware" => 'auth:api',
+     ],function($router) {
+        Route::delete("carts/delete_all",[CartController::class,"delete_all"]);
     //     Route::post("carts/apply_cupon",[CartController::class,"apply_cupon"]);
-    //     Route::resource('carts', CartController::class);
+         Route::resource('carts', CartController::class);
     //     Route::resource('user_address', UserAddressController::class);
         
     //     Route::get("mercadopago",[SaleController::class,"mercadopago"]);
@@ -139,7 +140,7 @@ Route::group([
     //     Route::post("profile_client",[AuthController::class,"update"]);
     //     Route::resource('reviews', ReviewController::class);
 
-    // });
+    });
 
 });
 

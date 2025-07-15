@@ -201,9 +201,9 @@
             </div>
         </div>
         <div class="cartmini__checkout">
-            <div class="cartmini__checkout-title mb-30">
+            <div class="cartmini__checkout-title mb-30" *ngIf="isLoading">
                 <h4>Subtotal:</h4>
-                <span>$113.00</span>
+                <span>{{ totalCarts }} {{ currency }}</span>
             </div>
             <div class="cartmini__checkout-btn">
                 <a href="cart.html" class="tp-btn mb-10 w-100"> view cart</a>
@@ -251,7 +251,7 @@
                                </li>
                             </ul>
                          </div>
-                         <div class="tp-header-top-menu-item tp-header-currency">
+                         <div class="tp-header-top-menu-item tp-header-currency" *ngIf="isLoading">
                             <span class="tp-header-currency-toggle" id="tp-header-currency-toggle">{{ currency }}</span>
                             <ul>
                                <li *ngIf="currency == 'COP'">
