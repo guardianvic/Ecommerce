@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ModalProductComponent } from '../guest-view/component/modal-product/modal-product.component';
 import { CookieService } from 'ngx-cookie-service';
+import { CartService } from './service/cart.service';
 
 
 
@@ -53,6 +54,7 @@ export class HomeComponent {
     constructor(
       public homeService: HomeService,
       private cookieService: CookieService,
+      public cartService: CartService,
       private toastr: ToastrService,
       private router: Router,
     ) {
@@ -105,9 +107,54 @@ export class HomeComponent {
       ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
-         this.currency = this.cookieService.get("currency") ? this.cookieService.get("currency") : 'COP';
-       
-          
+         this.currency = this.cookieService.get("currency") ? this.cookieService.get("currency") : 'COP';   
+      }
+
+      addCart(PRODUCT:any) {
+        if(!this.cartService.authService.user){
+          this.toastr.error("Ingrese a la tienda","Validacion");
+          this.router.navigateByUrl("/login");
+          return;
+        }
+    
+        if(PRODUCT.variations.length > 0){
+          $("#producQuickViewModal").modal("show");
+          this.openDetailProduct(PRODUCT);
+          return;
+        }
+    
+        let discount_g = null;
+    
+        if(PRODUCT.discount_g){
+          discount_g = PRODUCT.discount_g;
+        }
+    
+        let data = {
+          product_id: PRODUCT.id,
+          type_discount: discount_g ? discount_g.type_discount : null,
+          discount: discount_g ? discount_g.discount : null,
+          type_campaing: discount_g ? discount_g.type_campaing : null,
+          code_cupon: null,
+          code_discount: discount_g ? discount_g.code : null,
+          product_variation_id: null,
+          quantity: 1,
+          price_unit: this.currency == 'COL' ? PRODUCT.price_cop : PRODUCT.price_usd,
+          subtotal: this.getTotalPriceProduct(PRODUCT),
+          total: this.getTotalPriceProduct(PRODUCT)*1,
+          currency: this.currency,
+        }
+    
+        this.cartService.registerCart(data).subscribe((resp:any) => {
+          console.log(resp);
+          if(resp.message == 403){
+            this.toastr.error("Validacion",resp.message_text);
+          }else{
+            this.cartService.changeCart(resp.cart);
+            this.toastr.success("El producto se agrego al carrito de compra","Exitos");
+          }
+        },err => {
+          console.log(err);
+        })
       }
 
       getLabelSlider(SLIDER:any){
@@ -148,7 +195,7 @@ export class HomeComponent {
         return formato.format(total);
       }        
 
-      getTotalPriceProduct(PRODUCT: any) {
+      getTotalPriceProduct(PRODUCT: any): any {
         if (PRODUCT.discount_g) {
           return this.getNewTotal(PRODUCT, PRODUCT.discount_g); 
         }

@@ -125,7 +125,7 @@
 																	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																		<tr>
 																			<td class="img-center p-30 px-15" style="font-size:0pt; line-height:0pt; text-align:center; padding: 30px; padding-left: 15px; padding-right: 15px;">
-																				<a href="https://laravest.com/" target="_blank"><img src="https://laravest.com/assets_lab/images/Logo-2.webp" style="background: black;border-radius: 5px;" width="112" height="43" editable="true" border="0" alt="" /></a>
+																				<a href="/" target="_blank"><img src="https://cdn-icons-gif.flaticon.com/6569/6569161.gif" style="background: black;border-radius: 5px;" width="112" height="43" editable="true" border="0" alt="" /></a>
 																			</td>
 																		</tr>
 																	</table>
@@ -148,14 +148,14 @@
 																								<tr>
 																									<td class="title-36 a-center pb-15" style="font-size:36px; line-height:40px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 15px;">
 																										<multiline>
-																											<strong>Activate with Code</strong>
+																											<strong>Activar con codigo</strong>
 																										</multiline>
 																									</td>
 																								</tr>
 																								<tr>
 																									<td class="text-16 lh-26 a-center pb-25" style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center; padding-bottom: 25px;">
 																										<multiline>
-																											Click on the button below to activate code, this is your requested account key code to log in with your email address (name@mail.com)
+																											Haga click en el botón de abajo para activar el código.Este es el código de clave de cuenta solicitado para iniciar sesión con su dirección de correo electrónico (name@mail.com)
 																										</multiline>
 																									</td>
 																								</tr>
@@ -165,7 +165,7 @@
 																											<tr>
 																												<td class="title-22 a-center py-20 px-50 mpx-15" style="border-radius: 10px; border: 1px dashed #b4b4d4; font-size:22px; line-height:26px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-top: 20px; padding-bottom: 20px; padding-left: 50px; padding-right: 50px;" bgcolor="#f4ecfa">
 																													<multiline>
-																														<strong>USE CODE : <span class="c-purple" style="color:#9128df;">{{$user->code_verified}}</span></strong>
+																														<strong>USAR CÓDIGO : <span class="c-purple" style="color:#9128df;">{{$user->code_verified}}</span></strong>
 																													</multiline>
 																												</td>
 																											</tr>
@@ -180,7 +180,7 @@
 																												<td class="btn-16 c-white l-white" bgcolor="#f3189e" style="font-size:16px; line-height:20px; mso-padding-alt:15px 35px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; border-radius:25px; min-width:auto !important; color:#ffffff;">
 																													<multiline>
 																														<a href="#" target="_blank" class="link c-white" style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
-																															<span class="link c-white" style="text-decoration:none; color:#ffffff;">ACTIVATE CODE</span>
+																															<span class="link c-white" style="text-decoration:none; color:#ffffff;">ACTIVAR CÓDIGO</span>
 																														</a>
 																													</multiline>
 																												</td>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product\ProductVariation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
@@ -30,12 +31,12 @@ class Cart extends Model
 
     public function setCreatedAtAttribute()
     {
-        $this->attributes['created_at'] = Carbon::now('America/Bogota')->toDateTimeString();
+        $this->attributes['created_at'] = Carbon::now("America/Bogota")->toDateTimeString();
     }
    
     public function setUpdatedAtAttribute()
     {
-        $this->attributes['updated_at'] = Carbon::now('America/Bogota')->toDateTimeString();
+        $this->attributes['updated_at'] = Carbon::now("America/Bogota")->toDateTimeString();
     }
     
     public function user()

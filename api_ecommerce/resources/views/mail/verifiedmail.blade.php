@@ -142,13 +142,13 @@
 																							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																								<tr>
 																									<td class="fluid-img img-center pb-50" style="font-size:0pt; line-height:0pt; text-align:center; padding-bottom: 50px;">
-																										<img src="https://cdn-icons-png.flaticon.com/512/5013/5013710.png" width="253" height="300" editable="true" border="0" alt="" />
+																										<img src="https://cdn-icons-gif.flaticon.com/6416/6416397.gif" width="253" height="300" editable="true" border="0" alt="" />
 																									</td>
 																								</tr>
 																								<tr>
 																									<td class="title-36 a-center pb-15" style="font-size:36px; line-height:40px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 15px;">
 																										<multiline>
-																											<strong>Verify Your Email Account</strong>
+																											<strong>Verifique su cuenta de correo electrónico</strong>
 																										</multiline>
 																									</td>
 																								</tr>

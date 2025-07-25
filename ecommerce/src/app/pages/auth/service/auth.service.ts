@@ -1,9 +1,9 @@
-import { locale } from './../../../../../../admin/src/app/modules/i18n/vocabs/fr';
 import { HttpClient } from '@angular/common/http';
 import { afterNextRender, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { URL_SERVICIOS } from '../../../config/config';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,16 +23,16 @@ export class AuthService {
    }
 
   iniAuth(){
-    if(localStorage.getItem('token')){
-      this.user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') ?? '') : null;
-      this.token = localStorage.getItem('token') + '';
+    if(localStorage.getItem("token")){
+      this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") ?? '') : null;
+      this.token = localStorage.getItem("token")+"";
     }
     
   }
 
   login(email:string, password:string){
     let URL = URL_SERVICIOS+"/auth/login_ecommerce";
-    return this.http.post(URL, {email, password}).pipe(
+    return this.http.post(URL, {email,password}).pipe(
       map((resp:any)=>{ 
         console.log(resp);
         const result = this.saveLocalStorage(resp);
@@ -56,37 +56,36 @@ export class AuthService {
 
   register(data:any){
     let URL = URL_SERVICIOS+"/auth/register";
-    return this.http.post(URL, data);
+    return this.http.post(URL,data);
   }
 
   verifiedAuth(data:any){
     let URL = URL_SERVICIOS+"/auth/verified_auth";
-    return this.http.post(URL, data);
+    return this.http.post(URL,data);
   }
 
   verifiedMail(data:any){
     let URL = URL_SERVICIOS+"/auth/verified_email";
-    return this.http.post(URL, data);
+    return this.http.post(URL,data);
   }
 
   verifiedCode(data:any){
     let URL = URL_SERVICIOS+"/auth/verified_code";
-    return this.http.post(URL, data);
+    return this.http.post(URL,data);
   }
 
   verifiedNewPassword(data:any){
     let URL = URL_SERVICIOS+"/auth/new_password";
-    return this.http.post(URL, data);
+    return this.http.post(URL,data);
   }
 
   logout(){
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     this.user = null;
     this.token = '';
-    
     setTimeout(() => {      
-      this.router.navigate(['/login']);
+      this.router.navigateByUrl("/login");
     },500);
 
   }

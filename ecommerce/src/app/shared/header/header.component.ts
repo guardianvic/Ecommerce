@@ -27,6 +27,8 @@ export class HeaderComponent {
   totalCarts:number = 0;
   isLoading:boolean = false;
   searchT:string = '';
+
+  selectedCategoryId: number | null = null;
   
   constructor(
         public homeService: HomeService,
@@ -67,12 +69,12 @@ export class HeaderComponent {
             }, 50);
           }, 50);
         })    
-      } 
+  } 
 
-      ngOnInit(): void {
+  ngOnInit(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
-        console.log(this.user);
+        // console.log(this.user);
         this.cartService.currentDataCart$.subscribe((resp:any) => {
         // console.log(resp);
         this.listCarts = resp;
@@ -80,44 +82,47 @@ export class HeaderComponent {
         
        })
         
-      }
+  }
 
-      logout(){
+  logout(){
         this.cartService.authService.logout();
         setTimeout(() => {
           window.location.reload()
         }, 50);
-      }
+  }
 
-      deleteCart(CART:any) {
+  deleteCart(CART:any) {
         this.cartService.deleteCart(CART.id).subscribe((resp:any) => {
           this.toastr.info("Eliminación","Se elimino el producto "+CART.product.title + " del carrito de compra");
           this.cartService.removeCart(CART);
         })
-      }
+  }
       
-      getIconMenu(menu:any){
+  getIconMenu(menu:any){
         var miDiv:any = document.getElementById('icon-'+menu.id);
         miDiv.innerHTML = menu.icon; 
         return '';
-      }
+  }
 
-      changeCurrency(val:string){
-        // if(this.user){
-        //   this.cartService.deleteCartsAll().subscribe((resp:any) => {
+  changeCurrency(val:string){
+        if(this.user){
+          this.cartService.deleteCartsAll().subscribe((resp:any) => {
              this.cookieService.set("currency",val);
-        //     window.location.reload();
-        //     console.log(resp);
-        //   })
-        // }else{
-        //   this.cookieService.set("currency",val);
+            window.location.reload();
+            console.log(resp);
+          })
+        }else{
+          this.cookieService.set("currency",val);
           setTimeout(() => {
             window.location.reload();
           }, 25);
-        // }
-      }
+         }
+  }
     
-       searchProduct(){
+  searchProduct(){
          window.location.href = "/productos-busqueda?search="+this.searchT;
-       }
+  }
+
+ 
+  
 }

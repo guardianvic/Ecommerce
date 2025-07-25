@@ -13,14 +13,14 @@
           <div class="offcanvas__top mb-70 d-flex justify-content-between align-items-center">
              <div class="offcanvas__logo logo">
                 <a href="index.html">
-                   <img src="assets/img/logo/ecommerce.svg" alt="logo">
+                   <!-- <img src="assets/img/logo/ecommerce.svg" alt="logo"> -->
                 </a>
              </div>
           </div>
           <div class="offcanvas__category pb-40">
              <button class="tp-offcanvas-category-toggle">
                 <i class="fa-solid fa-bars"></i>
-                All Categories
+                Todas las categorias
              </button>
              <div class="tp-category-mobile-menu">
                 
@@ -47,12 +47,16 @@
        <div class="offcanvas__bottom">
           <div class="offcanvas__footer d-flex align-items-center justify-content-between">
              <div class="offcanvas__currency-wrapper currency">
-                <span class="offcanvas__currency-selected-currency tp-currency-toggle" id="tp-offcanvas-currency-toggle">Currency : USD</span>
+                <span class="offcanvas__currency-selected-currency tp-currency-toggle" id="tp-offcanvas-currency-toggle">{{ currency }}</span>
                 <ul class="offcanvas__currency-list tp-currency-list">
-                   <li>USD</li>
-                   <li>ERU</li>
-                   <li>BDT </li>
-                   <li>INR</li>
+                  
+                     <li *ngIf="currency == 'COP'">
+                        <a href="#" (click)="changeCurrency('USD')">USD</a>
+                     </li>
+                     <li *ngIf="currency == 'USD'">
+                        <a href="#" (click)="changeCurrency('COP')">COP</a>
+                     </li>
+                  
                 </ul>
              </div>
              <div class="offcanvas__select language">
@@ -61,7 +65,7 @@
                       <img src="assets/img/icon/language-flag.png" alt="">
                    </div>
                    <div class="offcanvas__lang-wrapper">
-                      <span class="offcanvas__lang-selected-lang tp-lang-toggle" id="tp-offcanvas-lang-toggle">English</span>
+                      <span class="offcanvas__lang-selected-lang tp-lang-toggle" id="tp-offcanvas-lang-toggle">Español</span>
                       <ul class="offcanvas__lang-list tp-lang-list">
                          <li>Spanish</li>
                          <li>Portugese</li>
@@ -86,7 +90,7 @@
              <div class="tp-mobile-item text-center">
                 <a href="shop.html" class="tp-mobile-item-btn">
                    <i class="flaticon-store"></i>
-                   <span>Store</span>
+                   <span>Tienda</span>
                 </a>
              </div>
           </div>
@@ -94,7 +98,7 @@
              <div class="tp-mobile-item text-center">
                 <button class="tp-mobile-item-btn tp-search-open-btn">
                    <i class="flaticon-search-1"></i>
-                   <span>Search</span>
+                   <span>Buscar</span>
                 </button>
              </div>
           </div>
@@ -102,7 +106,7 @@
              <div class="tp-mobile-item text-center">
                 <a href="wishlist.html" class="tp-mobile-item-btn">
                    <i class="flaticon-love"></i>
-                   <span>Wishlist</span>
+                   <span>Lista de deseos</span>
                 </a>
              </div>
           </div>
@@ -110,7 +114,7 @@
              <div class="tp-mobile-item text-center">
                 <a href="profile.html" class="tp-mobile-item-btn">
                    <i class="flaticon-user"></i>
-                   <span>Account</span>
+                   <span>Cuenta</span>
                 </a>
              </div>
           </div>
@@ -163,41 +167,57 @@
         <div class="cartmini__top-wrapper">
             <div class="cartmini__top p-relative">
                 <div class="cartmini__top-title">
-                    <h4>Shopping cart</h4>
+                    <h4>Carrito de compras</h4>
                 </div>
                 <div class="cartmini__close">
                     <button type="button" class="cartmini__close-btn cartmini-close-btn"><i class="fal fa-times"></i></button>
                 </div>
             </div>
-            <div class="cartmini__shipping">
+            <!-- <div class="cartmini__shipping">
              <p> Free Shipping for all orders over <span>$50</span></p>
              <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" data-width="70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
               </div>                   
-            </div>
+            </div> -->
             <div class="cartmini__widget">
-                <div class="cartmini__widget-item">
-                    <div class="cartmini__thumb">
-                      <a href="product-details.html">
-                         <img src="assets/img/product/product-1.jpg" alt="">
-                      </a>
-                    </div>
-                    <div class="cartmini__content">
-                      <h5 class="cartmini__title"><a href="product-details.html">Level Bolt Smart Lock</a></h5>
-                      <div class="cartmini__price-wrapper">
-                         <span class="cartmini__price">$46.00</span>
-                         <span class="cartmini__quantity">x2</span>
+               @for(cart of listCarts;track cart.id){
+
+                  <div class="cartmini__widget-item">
+                      <div class="cartmini__thumb">
+                        <a [routerLink]="'/product/'+cart.product.slug">
+                           <img [src]="cart.product.imagen" alt="">
+                        </a>
                       </div>
-                    </div>
-                    <a href="#" class="cartmini__del"><i class="fa-regular fa-xmark"></i></a>
-                </div>
+                      <div class="cartmini__content">
+                        <h5 class="cartmini__title"> <a [routerLink]="'/product/'+cart.product.slug">{{ cart.product.title}}</a></h5>
+                        <div class="cartmini__price-wrapper">
+                           <span class="cartmini__price">{{ cart.subtotal }} {{ currency }}</span>
+                           <span class="cartmini__quantity mx-1">x{{ cart.quantity }}</span>
+                           <br>
+                           <span class="cartmini__price">Total: {{ cart.total }} {{ currency }}</span>
+                           @if (cart.product_variation) {
+                              <br>
+                              <span class="cartmini__quantity mx-1">{{ cart.product_variation.attibute.name }} :
+                                  {{ cart.product_variation.propertie ? cart.product_variation.propertie.name : cart.product_variation.value_add}}</span>
+                                  @if (cart.product_variation.variation_father) {
+                                    <br>
+                                    <span class="cartmini__quantity mx-1">{{ cart.product_variation.variation_father.attibute.name }} :
+                                       {{ cart.product_variation.variation_father.propertie ? cart.product_variation.variation_father.propertie.name : cart.product_variation.variation_father.value_add}}</span>
+
+                                  }
+                           }
+                        </div>
+                      </div>
+                      <a href="#" onclick="return false" (click)="deleteCart(cart)" class="cartmini__del"><i class="fa-regular fa-xmark"></i></a>
+                  </div>
+               }
             </div>
             <!-- for wp -->
             <!-- if no item in cart -->
             <div class="cartmini__empty text-center d-none">
                 <img src="assets/img/product/cartmini/empty-cart.png" alt="">
-                <p>Your Cart is empty</p>
-                <a href="shop.html" class="tp-btn">Go to Shop</a>
+                <p>Su carrito está vacío</p>
+                <a href="/" class="tp-btn">Ir a la tienda</a>
             </div>
         </div>
         <div class="cartmini__checkout">
@@ -206,8 +226,8 @@
                 <span>{{ totalCarts }} {{ currency }}</span>
             </div>
             <div class="cartmini__checkout-btn">
-                <a href="cart.html" class="tp-btn mb-10 w-100"> view cart</a>
-                <a href="checkout.html" class="tp-btn tp-btn-border w-100"> checkout</a>
+               <a routerLink="/carrito-de-compra" class="tp-btn mb-10 w-100"> ver carrito </a>
+               <a routerLink="/proceso-de-pago" class="tp-btn tp-btn-border w-100"> Finalizar compra </a>
             </div>
         </div>
     </div>
@@ -231,17 +251,17 @@
                             <path d="M16.9091 17.3636C18.1643 17.3636 19.1818 16.3461 19.1818 15.0909C19.1818 13.8357 18.1643 12.8182 16.9091 12.8182C15.6539 12.8182 14.6364 13.8357 14.6364 15.0909C14.6364 16.3461 15.6539 17.3636 16.9091 17.3636Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                          </svg>                                 
                       </span>
-                      <p>FREE Express Shipping On Orders $570+</p>
+                      <p> Envío exprés GRATIS en pedidos de $200.000 o más </p>
                    </div>
                 </div>
                 <div class="col-md-6">
                    <div class="tp-header-top-right d-flex align-items-center justify-content-end">
                       <div class="tp-header-top-menu d-flex align-items-center justify-content-end">
                          <div class="tp-header-top-menu-item tp-header-lang">
-                            <span class="tp-header-lang-toggle" id="tp-header-lang-toggle">English</span>
+                            <span class="tp-header-lang-toggle" id="tp-header-lang-toggle">Español</span>
                             <ul>
                                <li>
-                                  <a href="#">Spanish</a>
+                                  <a href="#">English</a>
                                </li>
                                <li>
                                   <a href="#">Russian</a>
@@ -263,19 +283,19 @@
                             </ul>
                          </div>
                          <div class="tp-header-top-menu-item tp-header-setting">
-                            <span class="tp-header-setting-toggle" id="tp-header-setting-toggle">Setting</span>
+                            <span class="tp-header-setting-toggle" id="tp-header-setting-toggle">Configuracion</span>
                             <ul>
                                <li>
-                                  <a href="profile.html">My Profile</a>
+                                  <a href="profile.html">Mi perfil</a>
                                </li>
                                <li>
-                                  <a href="wishlist.html">Wishlist</a>
+                                  <a href="wishlist.html">Lista de deseos</a>
                                </li>
                                <li>
-                                  <a href="cart.html">Cart</a>
+                                  <a href="cart.html">Carrito</a>
                                </li>
                                <li>
-                                  <a href="login.html">Logout</a>
+                                  <a href="login.html">Cerrar sesión</a>
                                </li>
                             </ul>
                          </div>
@@ -306,7 +326,7 @@
                             </div>
                             <div class="tp-header-search-category">
                                <select>
-                                  <option>Select Category</option>
+                                  <option>Buscar Categoria</option>
                                   <option>Mobile</option>
                                   <option>Digital Watch</option>
                                   <option>Computer</option>
@@ -371,7 +391,7 @@
                                   <path d="M7.70365 10.1018H7.74942" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                   <path d="M13.5343 10.1018H13.5801" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                </svg>    
-                               <span class="tp-header-action-badge">13</span>                                                                          
+                               <span class="tp-header-action-badge">{{ listCarts.length }}</span>                                                                          
                             </button>
                          </div>
                          <div class="tp-header-action-item d-lg-none">
@@ -490,7 +510,7 @@
                          <nav class="tp-main-menu-content">
                             <ul>
                                <li class="has-dropdown has-mega-menu">
-                                  <a href="index.html">Home</a>
+                                  <a href="index.html">Inicio</a>
                                   <div class="home-menu tp-submenu tp-mega-menu">
                                      <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-5">
                                         <div class="col">
@@ -557,7 +577,7 @@
                                   </div>
                                </li>
                                <li  class="has-dropdown has-mega-menu">
-                                  <a href="shop.html">Shop</a>
+                                  <a href="shop.html">Tienda</a>
                                   <div class="shop-mega-menu tp-submenu tp-mega-menu">
                                      <div class="row">
                                         <div class="col-lg-2">
@@ -623,7 +643,7 @@
                               </li>
                                <li class="has-dropdown has-mega-menu ">
                                   
-                                  <a href="shop.html">Products</a>
+                                  <a href="shop.html">Productos</a>
                                   <ul class="tp-submenu tp-mega-menu mega-menu-style-2">
                                      <!-- first col -->
                                      <li class="has-dropdown">
@@ -682,7 +702,7 @@
 
                                   </ul>
                                </li>
-                               <li><a href="coupon.html">Coupons</a></li>
+                               <li><a href="coupon.html">Cupones</a></li>
                                <li class="has-dropdown">
                                   <a href="blog.html">Blog</a>
                                   <ul class="tp-submenu">
@@ -693,7 +713,7 @@
                                      <li><a href="blog-details.html">Blog Details</a></li>
                                   </ul>
                                </li>
-                               <li><a href="contact.html">Contact</a></li>
+                               <li><a href="contact.html">Contacto</a></li>
                             </ul>
                          </nav>
                       </div>
@@ -710,8 +730,8 @@
                             </span>
                          </div>
                          <div class="tp-header-contact-content">
-                            <h5>Hotline:</h5>
-                            <p><a href="tel:402-763-282-46">+(402) 763 282 46</a></p>
+                            <h5>Linea Directa:</h5>
+                            <p><a href="tel:402-763-282-46">+(57) 320-643-1109</a></p>
                          </div>
                       </div>
                    </div>
@@ -738,7 +758,7 @@
                    <nav id="mobile-menu"> 
                       <ul>
                          <li class="has-dropdown has-mega-menu">
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Inicio</a>
                             <div class="home-menu tp-submenu tp-mega-menu">
                                <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-5">
                                   <div class="col">
@@ -805,7 +825,7 @@
                             </div>
                          </li>
                          <li  class="has-dropdown has-mega-menu">
-                            <a href="shop.html">Shop</a>
+                            <a href="shop.html">Tienda</a>
                             <div class="shop-mega-menu tp-submenu tp-mega-menu">
                                <div class="row">
                                   <div class="col-lg-2">
@@ -871,7 +891,7 @@
                         </li>
                          <li class="has-dropdown has-mega-menu ">
                             
-                            <a href="shop.html">Products</a>
+                            <a href="shop.html">Productos</a>
                             <ul class="tp-submenu tp-mega-menu mega-menu-style-2">
                                <!-- first col -->
                                <li class="has-dropdown">
@@ -930,7 +950,7 @@
 
                             </ul>
                          </li>
-                         <li><a href="coupon.html">Coupons</a></li>
+                         <li><a href="coupon.html">Cupones</a></li>
                          <li class="has-dropdown">
                             <a href="blog.html">Blog</a>
                             <ul class="tp-submenu">
@@ -941,7 +961,7 @@
                                <li><a href="blog-details.html">Blog Details</a></li>
                             </ul>
                          </li>
-                         <li><a href="contact.html">Contact</a></li>
+                         <li><a href="contact.html">Contacto</a></li>
                       </ul>
                    </nav>
                 </div>
@@ -975,7 +995,7 @@
                             <path d="M7.70365 10.1018H7.74942" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M13.5343 10.1018H13.5801" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                          </svg>    
-                         <span class="tp-header-action-badge">13</span>                                                                          
+                         <span class="tp-header-action-badge">{{ listCarts.length }}</span>                                                                          
                       </button>
                    </div>
                    <div class="tp-header-action-item d-lg-none">

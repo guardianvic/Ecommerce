@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ecommerce;
 
+use auth;
 use App\Models\Sale\Cart;
 use Illuminate\Http\Request;
 use App\Models\Cupone\Cupone;

@@ -4,7 +4,6 @@ import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 
-declare function password_show_toggle():any;  
 
 @Component({
   selector: 'app-register',
@@ -35,7 +34,7 @@ export class RegisterComponent {
       !this.email ||
       !this.password ||
       !this.phone){
-        this.toastr.error('Validacion', 'Todos los campos son obligatorios' );
+        this.toastr.error("Necesitas ingresar todos los campos","Validacion" );
       return;
     }
     let data = {
@@ -47,7 +46,7 @@ export class RegisterComponent {
     }
     this.authService.register(data).subscribe((resp:any)=>{
       console.log(resp);
-      this.toastr.success('Exito', 'Ingresa a tu correo para completar tu registro' );
+      this.toastr.success("Ingresa a tu correo para poder completar tu registro","Exito");
         setTimeout(() => {
           this.router.navigateByUrl('/login'); 
         }, 50);      
